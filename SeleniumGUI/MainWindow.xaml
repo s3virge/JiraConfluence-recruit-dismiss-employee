@@ -1,0 +1,23 @@
+﻿<Window x:Class="SeleniumGUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SeleniumGUI"
+        mc:Ignorable="d"
+        Title="Jira and confluence - user creation" Height="305.851" Width="386.774" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="jira-icon.png">
+
+    <Grid Background="#FF82ACBF">
+        <TextBox x:Name="tbUserName" HorizontalAlignment="Left" Height="23" Margin="44,21,0,0" TextWrapping="NoWrap" ToolTip="User name" VerticalAlignment="Top" Width="218" LostFocus="TextBoxLostFocus" FontSize="16"/>
+        <TextBox x:Name="tbFullLogin" HorizontalAlignment="Left" Height="23" Margin="44,57,0,0" TextWrapping="NoWrap" ToolTip="User login"  VerticalAlignment="Top" Width="218" FontSize="16" />
+        <TextBox x:Name="tbMail" HorizontalAlignment="Left" Height="23" Margin="44,96,0,0" TextWrapping="Wrap" ToolTip="Mail" VerticalAlignment="Top" Width="218" FontSize="16" />
+        <RadioButton x:Name="radiobtnUkraine" GroupName="Country" Checked="CheckeHandler" Content="Ukraine" HorizontalAlignment="Left" Margin="44,132,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <RadioButton x:Name="radiobtnBelarus" GroupName="Country" Checked="CheckeHandler" Content="Belarus" HorizontalAlignment="Left" Margin="44,155,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <Button x:Name="btnOK" Content="OK" IsDefault="True" HorizontalAlignment="Left" Margin="105,219,0,0" VerticalAlignment="Top" Width="75" Click="btnOK_Click" Height="35"/>
+        <Button x:Name="btnCancel" Content="Cancel" IsCancel="True" HorizontalAlignment="Left" Margin="201,219,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click" Height="35"/>
+        <Label x:Name="label" Content="User name" HorizontalAlignment="Left" Margin="273,19,0,0" VerticalAlignment="Top" FontSize="14" Width="87"/>
+        <Label x:Name="label1" Content="User login" HorizontalAlignment="Left" Margin="273,54,0,0" VerticalAlignment="Top" Width="77" FontSize="14"/>
+        <Label x:Name="label2" Content="MailBox" HorizontalAlignment="Left" Margin="273,93,0,0" VerticalAlignment="Top" Width="77" FontSize="14"/>
+        <CheckBox x:Name="chBoxSubcontractor" Content="Subcontractor" HorizontalAlignment="Left" Margin="44,181,0,0" VerticalAlignment="Top" Width="123" FontSize="14"/>
+    </Grid>
+</Window>
