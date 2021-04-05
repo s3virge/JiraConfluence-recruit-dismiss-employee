@@ -1,11 +1,12 @@
-﻿using OpenQA.Selenium;
+﻿using ActiveDirectoryLibrary;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using System;
 
-namespace SeleniumAutomation {
-    public class Selenium {
-        private User _user;
+namespace SeleniumAutomationLibrary {
+    public class CreatingAnEmployee {
+        private Employee _employee;
         private WebDriverWait _wait;
         private const string _password = "2XeytrEV)78";
 
@@ -16,19 +17,8 @@ namespace SeleniumAutomation {
             ProcessCompleted?.Invoke(this, e);
         }
 
-        static void Main(string[] args) {
-            User user = new User() {
-                Name = "Egor Shenkarenko",
-                Login = "e.shenkarenko@intetics.com",
-                Country = Country.UA,
-                Mail = "e.shenkarenko@intetics.com",
-                Subcontractor = false
-            };
-            new Selenium().Launch(user);
-        }
-
-        public void Launch(User user) {
-            _user = user;
+        public void Launch(Employee user) {
+            _employee = user;
 
             //IWebDriver driver = new ChromeDriver(); 
             /*OpenQA.Selenium.DriverServiceNotFoundException: 'The chromedriver.exe file does not exist in the current 
@@ -54,16 +44,11 @@ namespace SeleniumAutomation {
             }
         }
 
-        private void DebugWaitInput() {
-            Console.WriteLine($"{_user.Login} has been created.");
-            Console.ReadLine();
-        }
-
         private void JiraUserCreating(IWebDriver driver) {
             ProcessUserCreatingInJira(driver);
 
             //if user not a subcontractor
-            if (_user.Subcontractor == false) {
+            if (_employee.Subcontractor == false) {
                 AddToJiraGroup(driver);
             }
         }
@@ -94,16 +79,16 @@ namespace SeleniumAutomation {
 
             LoginToConfluence(driver);
             ProcessUserCreatingConfluence(driver);
-            if (_user.Subcontractor == false) {
+            if (_employee.Subcontractor == false) {
                 AddToConfluenceGroup(driver);
             }
         }
 
         private void ProcessUserCreatingConfluence(IWebDriver driver) {
             _wait.Until(webDriver => webDriver.FindElement(By.Id("create-pane")).Displayed);
-            driver.FindElement(By.Id("username")).SendKeys(_user.Login);
-            driver.FindElement(By.Id("fullname")).SendKeys(_user.Name);
-            driver.FindElement(By.Id("email")).SendKeys(_user.Mail);
+            driver.FindElement(By.Id("username")).SendKeys(_employee.Login);
+            driver.FindElement(By.Id("fullname")).SendKeys(_employee.FullName);
+            driver.FindElement(By.Id("email")).SendKeys(_employee.Mail);
             const string pass = "1";
             driver.FindElement(By.Id("password")).SendKeys(pass);
             driver.FindElement(By.Id("confirm")).SendKeys(pass);
@@ -111,7 +96,7 @@ namespace SeleniumAutomation {
         }
 
         private void AddToConfluenceGroup(IWebDriver driver) {
-            driver.Navigate().GoToUrl($"https://confluence.intetics.com/confluence/admin/users/editusergroups-start.action?username={_user.Login}");
+            driver.Navigate().GoToUrl($"https://confluence.intetics.com/confluence/admin/users/editusergroups-start.action?username={_employee.Login}");
             IWebElement checkBoxEmployees = driver.FindElement(By.Id("confluence-employees"));
             if (checkBoxEmployees.Selected == false) {
                 checkBoxEmployees.Click();
@@ -120,7 +105,7 @@ namespace SeleniumAutomation {
         }
 
         private void LoginToConfluence(IWebDriver driver) {
-            driver.Navigate().GoToUrl($"https://confluence.intetics.com/confluence/authenticate.action?destination=/admin/users/viewuser.action?username={_user.Login}");
+            driver.Navigate().GoToUrl($"https://confluence.intetics.com/confluence/authenticate.action?destination=/admin/users/viewuser.action?username={_employee.Login}");
             _wait.Until(webDriver => webDriver.FindElement(By.Id("login-container")).Displayed);
             driver.FindElement(By.Id("password")).SendKeys(_password);
             driver.FindElement(By.Id("authenticateButton")).Click();
@@ -129,7 +114,7 @@ namespace SeleniumAutomation {
 
         private void AddToJiraGroup(IWebDriver driver) {
             _wait.Until(webDriver => webDriver.FindElement(By.Id("user-filter-userSearchFilter")).Displayed);
-            string editGroupHref = driver.FindElement(By.Id($"editgroups_{_user.Login}")).GetAttribute("href");
+            string editGroupHref = driver.FindElement(By.Id($"editgroups_{_employee.Login}")).GetAttribute("href");
             //go to Manage user groups
             driver.Navigate().GoToUrl(editGroupHref);
 
@@ -138,7 +123,7 @@ namespace SeleniumAutomation {
             driver.FindElement(By.Id("groupsToJoin-textarea")).SendKeys(Keys.Enter);
             driver.FindElement(By.Id("user-edit-groups-join")).Click();
 
-            driver.Navigate().GoToUrl($"https://jira.intetics.com/secure/admin/user/UserBrowser.jspa?createdUser={_user.Login}");
+            driver.Navigate().GoToUrl($"https://jira.intetics.com/secure/admin/user/UserBrowser.jspa?createdUser={_employee.Login}");
         }
 
         private void ProcessUserCreatingInJira(IWebDriver driver) {
@@ -148,10 +133,10 @@ namespace SeleniumAutomation {
             driver.Navigate().GoToUrl("https://jira.intetics.com/secure/admin/user/AddUser!default.jspa");
             _wait.Until(webDriver => webDriver.FindElement(By.Id("user-create")).Displayed);
 
-            driver.FindElement(By.Id("user-create-email")).SendKeys(_user.Mail);
-            driver.FindElement(By.Id("user-create-fullname")).SendKeys(_user.Name);
-            driver.FindElement(By.Id("user-create-username")).SendKeys(_user.Login);
-            if (_user.Country.Equals(Country.UA) == true) {
+            driver.FindElement(By.Id("user-create-email")).SendKeys(_employee.Mail);
+            driver.FindElement(By.Id("user-create-fullname")).SendKeys(_employee.FullName);
+            driver.FindElement(By.Id("user-create-username")).SendKeys(_employee.Login);
+            if (_employee.Country.Equals(Country.UA) == true) {
                 //in dropdown list need to select Kharkiv
                 driver.FindElement(By.Id("user-create-directoryId")).SendKeys("Kharkiv");
             }

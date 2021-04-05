@@ -18,7 +18,6 @@ namespace ActiveDirectoryLibrary {
                 OnPropertyChanged(nameof(Login));
             }
         }
-
         public string FullName {
             get => _fullName;
             set {
@@ -29,7 +28,6 @@ namespace ActiveDirectoryLibrary {
                 OnPropertyChanged(nameof(FullName));
             }
         }
-
         public string Password {
             get => _password;
 
@@ -38,7 +36,6 @@ namespace ActiveDirectoryLibrary {
                 OnPropertyChanged(nameof(Password));
             }
         }
-
         public string ID { get; set; }
         public string Department { get; set; }
         public string Office { get; set; }
@@ -57,6 +54,8 @@ namespace ActiveDirectoryLibrary {
         public bool Disabled { get; set; }
         public string Manager { get; set; }
         public string SID { get; set; }
+        public bool Subcontractor { get; set; }
+        public bool Country { get; set; }
 
         private void OnPropertyChanged(string propertyName) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

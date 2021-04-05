@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -45,13 +46,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Confluence.cs" />
     <Compile Include="Country.cs" />
-    <Compile Include="Selenium.cs" />
+    <Compile Include="CreatingAnEmployee.cs" />
+    <Compile Include="DismissingAnEmployee.cs" />
+    <Compile Include="Jira.cs" />
+    <Compile Include="Microsoft.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ActiveDirectoryLibrary\ActiveDirectoryLibrary.csproj">
+      <Project>{A9310FE2-ACFD-409F-9DE0-585D840C8DA9}</Project>
+      <Name>ActiveDirectoryLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
