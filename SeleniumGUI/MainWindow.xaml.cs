@@ -1,4 +1,5 @@
-﻿using SeleniumAutomation;
+﻿using ActiveDirectoryLibrary;
+using SeleniumAutomation;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +18,8 @@ namespace SeleniumGUI {
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e) {
+            new ActiveDirectory().FindEmployees("Some Employee");
+
             _user.Login = tbFullLogin.Text;
             _user.Name = tbUserName.Text;
             _user.Mail = tbMail.Text;

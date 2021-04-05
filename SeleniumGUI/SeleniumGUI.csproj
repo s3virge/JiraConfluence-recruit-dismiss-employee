@@ -99,9 +99,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SeleniumAutomation\SeleniumAutomation.csproj">
-      <Project>{2d809d5f-0862-4c4d-946f-c339a7058a79}</Project>
-      <Name>SeleniumAutomation</Name>
+    <ProjectReference Include="..\ActiveDirectoryLibrary\ActiveDirectoryLibrary.csproj">
+      <Project>{a9310fe2-acfd-409f-9de0-585d840c8da9}</Project>
+      <Name>ActiveDirectoryLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SeleniumAutomationLibrary\SeleniumAutomationLibrary.csproj">
+      <Project>{9250aa8f-4b15-4a56-a6f8-715734df1674}</Project>
+      <Name>SeleniumAutomationLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
