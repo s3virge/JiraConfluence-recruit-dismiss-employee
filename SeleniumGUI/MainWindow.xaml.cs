@@ -1,6 +1,9 @@
 ﻿using ActiveDirectoryLibrary;
 using SeleniumAutomation;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.DirectoryServices.ActiveDirectory;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -17,28 +20,12 @@ namespace SeleniumGUI {
             MouseDown += delegate { DragMove(); };
         }
 
-        private void btnOK_Click(object sender, RoutedEventArgs e) {
-            new ActiveDirectory().FindEmployees("Some Employee");
-
-            _user.Login = tbFullLogin.Text;
-            _user.Name = tbUserName.Text;
-            _user.Mail = tbMail.Text;
-            _user.Subcontractor = (bool)chBoxSubcontractor.IsChecked;            
-
+        private void btnRecruit_Click(object sender, RoutedEventArgs e) {
             try {
                 if (string.IsNullOrEmpty(_user.Login) == true) {
                     throw new Exception("User login cannot be empty.");
                 }
-                if (string.IsNullOrEmpty(_user.Name) == true) {
-                    throw new Exception("User name cannot be empty");
-                }
-                if (string.IsNullOrEmpty(_user.Country) == true) {
-                    throw new Exception("County youser from does not selected.");
-                }
-                if (string.IsNullOrEmpty(_user.Mail) == true) {
-                    throw new Exception("User mailbox cannot be empty");
-                }
-
+               
                 RunSeleniumScript(_user);
             }
             catch (Exception seleniumExeption) {
@@ -57,13 +44,6 @@ namespace SeleniumGUI {
         }
 
         private void Selenium_ProcessCompleted(object sender, EventArgs e) {
-            //MessageBoxResult result = MessageBox.Show($"{_user.Name} ({_user.Login}) was saccessfuly created.\n\nClose the program?", "What to do?",
-            //        MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.Yes);
-
-            //if (result == MessageBoxResult.Yes) {
-            //    Close();
-            //}
-            
             MessageBox.Show($"The employee {_user.Name} ({_user.Login}) was successfully created in jira & confluence.");
         }
 
@@ -72,31 +52,34 @@ namespace SeleniumGUI {
             _user.Country = rb.Content.ToString();
         }
 
-        //private void TextBoxGotFocus(object sender, RoutedEventArgs e) {
-        //    TextBox tb = sender as TextBox;
-        //    //if user name fiels is not empty
-        //    if (string.IsNullOrEmpty(tbUserName.Text.Trim()) == false) {
-        //        //if text feild is empty 
-        //        if (string.IsNullOrEmpty(tb.Text) == true) {
-        //            //then generate user login
-        //            string[] name = tbUserName.Text.ToLower().Split();
-        //            tb.Text = $"{name[0].Substring(0, 1)}.{name[1]}@intetics.com";
-        //        }
-        //        //else do nothing
-        //    }
-        //}
+        private void btnFind_Click(object sender, RoutedEventArgs e) {
+            using (new WaitCursor())
+            try {
+                lstEmployees.Items.Clear();
+                string currentLDAPDomain = $"LDAP://{Domain.GetComputerDomain()}";
+                string employeeToSeek = tbUserName.Text;
 
-        private void TextBoxLostFocus(object sender, RoutedEventArgs e) {
-            if (string.IsNullOrEmpty(tbUserName.Text.Trim()) == false) {
-                //then generate user login
-                string[] name = tbUserName.Text.ToLower().Split();
-                try {
-                    tbFullLogin.Text = tbMail.Text = $"{name[0].Substring(0, 1)}.{name[1]}@intetics.com";
+                List<string> listOfEmployees = new ActiveDirectory().GetListOfEmployee(currentLDAPDomain, employeeToSeek);
+
+                if (listOfEmployees.Count > 0) {
+                    foreach (var item in listOfEmployees) {
+                        lstEmployees.Items.Add(item);
+                    }
                 }
-                catch (Exception) {
-                    MessageBox.Show($"Something wrong with user name {tbUserName.Text}");
-                }                
             }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message, "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void lstEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e) {
+            ShowEmployeeADInfo(lstEmployees.SelectedItem?.ToString());
+        }
+
+        private void ShowEmployeeADInfo(string e) {
+            string currentDomain = $"LDAP://{Domain.GetComputerDomain()}";
+            Employee empl = new ActiveDirectory().GetEmployee(currentDomain, e);
+            tbEmployeeInfo.Text = empl.ToString();
         }
     }
 }
