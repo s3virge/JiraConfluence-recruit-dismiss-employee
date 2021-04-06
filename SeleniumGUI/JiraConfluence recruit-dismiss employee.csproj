@@ -7,7 +7,7 @@
     <ProjectGuid>{195E4811-55EA-4F1B-816A-A9310769C6F2}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>SeleniumGUI</RootNamespace>
-    <AssemblyName>JiraConfluence user creation</AssemblyName>
+    <AssemblyName>JiraConfluence recruit-dismiss employee</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

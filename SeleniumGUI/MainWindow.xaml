@@ -5,15 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SeleniumGUI"
         mc:Ignorable="d"
-        Title="Jira and confluence - user creation" Height="397.964" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="jira-icon.png">
+        Title="Jira and confluence recruit and dismiss employee" Height="397.964" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="jira-icon.png">
 
     <Grid Background="#FF82ACBF">
         <Grid Background="#FFE5E5E5" Margin="0,0,0,63">                
             <TextBox x:Name="tbUserName" HorizontalAlignment="Left" Height="25" Margin="7,9,0,0" TextWrapping="NoWrap" ToolTip="User name" VerticalAlignment="Top" Width="206" FontSize="16"/>
             <RadioButton x:Name="radiobtnUkraine" GroupName="Country" Checked="CheckeHandler" Content="Ukraine" HorizontalAlignment="Left" Margin="222,109,0,0" VerticalAlignment="Top" FontSize="14" Height="16" Width="108"/>
             <RadioButton x:Name="radiobtnBelarus" GroupName="Country" Checked="CheckeHandler" Content="Belarus" HorizontalAlignment="Left" Margin="222,130,0,0" VerticalAlignment="Top" FontSize="14" Height="18" Width="108"/>
-            <ToggleButton x:Name="tbtnSubcontractor" Content="Subcontractor" HorizontalAlignment="Left" Margin="220,73,0,0" VerticalAlignment="Top" Width="110" FontSize="14" Height="28" BorderBrush="#FFDDDDDD"/>
-            <ToggleButton x:Name="tbtnAnotheDomain" Content="AnotherDomain" HorizontalAlignment="Left" Margin="220,39,0,0" VerticalAlignment="Top" Width="110" FontSize="14" Height="28" BorderBrush="#FFDDDDDD"/>
+            <ToggleButton x:Name="tbtnSubcontractor" Content="Subcontractor" HorizontalAlignment="Left" Margin="220,73,0,0" VerticalAlignment="Top" Width="110" FontSize="14" Height="28" BorderBrush="#FFDDDDDD" Click="tbtnSubcontractor_Click"/>
+            <ToggleButton x:Name="tbtnAnotheDomain" Content="AnotherDomain" HorizontalAlignment="Left" Margin="220,39,0,0" VerticalAlignment="Top" Width="110" FontSize="14" Height="28" BorderBrush="#FFDDDDDD" Click="tbtnAnotheDomain_Click"/>
             <Button x:Name="btnFind" Content="Find" IsDefault="True"  Click="btnFind_Click" HorizontalAlignment="Left" Margin="220,9,0,0" VerticalAlignment="Top" Width="110" Background="#FFDDDDDD" BorderBrush="#FFDDDDDD" Height="25"/>
             <ListBox x:Name="lstEmployees" SelectionChanged="lstEmployees_SelectionChanged" HorizontalAlignment="Left" Height="243" Margin="7,39,0,0" VerticalAlignment="Top" Width="206"/>
             <TextBox x:Name="tbEmployeeInfo" HorizontalAlignment="Left" Height="272" Margin="335,10,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="438"/>               

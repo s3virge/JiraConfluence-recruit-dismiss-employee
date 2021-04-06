@@ -25,6 +25,11 @@ namespace SeleniumGUI {
                     tbUserName.Focus();
                     throw new Exception("Employee to recruit does not selected.");
                 }
+                
+                if (string.IsNullOrEmpty(_employee.Country) == true) {
+                    radiobtnUkraine.Focus();
+                    throw new Exception("Employee country from does not selected.");
+                }
 
                 var result = MessageBox.Show($"Coworker {_employee.FullName} will be created. \n\nDo you want to continue?", "Continue", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes) {
@@ -74,13 +79,23 @@ namespace SeleniumGUI {
         }
 
         private void CheckeHandler(object sender, RoutedEventArgs e) {
-            RadioButton rb = sender as RadioButton;            
+            RadioButton rb = sender as RadioButton;
+            string rbContent = rb.Content.ToString();
+            if (rbContent.Equals(Country.BY) == true ) {
+                _employee.Country = Country.BY;
+            }
+            else if (rbContent.Equals(Country.UA) == true) {
+                _employee.Country = Country.UA;
+            }
         }
 
         private void btnFind_Click(object sender, RoutedEventArgs e) {            
             try {
                 using (new WaitCursor()) {
                     lstEmployees.Items.Clear();
+                    tbtnSubcontractor.IsChecked = false;
+                    radiobtnUkraine.IsChecked = false;
+                    radiobtnBelarus.IsChecked = false;
                     string currentLDAPDomain = $"LDAP://{Domain.GetComputerDomain()}";
                     string employeeToSeek = tbUserName.Text;
                     List<string> listOfEmployees = new ActiveDirectory().GetListOfEmployee(currentLDAPDomain, employeeToSeek);
@@ -90,6 +105,8 @@ namespace SeleniumGUI {
                             lstEmployees.Items.Add(item);
                         }
                     }
+
+                    lstEmployees.Focus();
                 }
             }
             catch (Exception ex) {
@@ -107,6 +124,17 @@ namespace SeleniumGUI {
             }
         }
 
-        
+        private void tbtnSubcontractor_Click(object sender, RoutedEventArgs e) {
+            if (tbtnSubcontractor.IsChecked == true) {
+                _employee.Subcontractor = true;
+            }
+            else {
+                _employee.Subcontractor = false;
+            }
+        }
+
+        private void tbtnAnotheDomain_Click(object sender, RoutedEventArgs e) {
+
+        }
     }
 }

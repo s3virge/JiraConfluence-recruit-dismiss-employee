@@ -15,6 +15,7 @@ namespace ActiveDirectoryLibrary {
 
             set {
                 _login = value.Trim().ToLower();
+                _login += "@intetics.com";
                 OnPropertyChanged(nameof(Login));
             }
         }
@@ -55,7 +56,7 @@ namespace ActiveDirectoryLibrary {
         public string Manager { get; set; }
         public string SID { get; set; }
         public bool Subcontractor { get; set; }
-        public bool Country { get; set; }
+        public string Country { get; set; }
 
         private void OnPropertyChanged(string propertyName) {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
