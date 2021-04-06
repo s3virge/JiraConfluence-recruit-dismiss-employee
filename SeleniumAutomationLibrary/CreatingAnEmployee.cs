@@ -39,6 +39,7 @@ namespace SeleniumAutomationLibrary {
                     OnProcessCompleted(EventArgs.Empty);
                 }
                 catch (Exception ex) {
+                    //driver.Dispose();
                     throw new Exception(ex.Message);
                 }
             }

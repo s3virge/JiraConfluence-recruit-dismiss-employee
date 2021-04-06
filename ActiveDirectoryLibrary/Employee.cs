@@ -90,7 +90,7 @@ namespace ActiveDirectoryLibrary {
                 employeeInfo += string.Format(Output.format, "Member off", $"{groups[0]};\n");
 
                 for (int c = 1; c <= groups.Count - 1; c++) {
-                    employeeInfo += string.Format("{0, -14}\t\t {1}", "\t", $"{groups[c]};\n");
+                    employeeInfo += string.Format(Output.format, "\t", $"{groups[c]};\n");
                 }
             }
 
