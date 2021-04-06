@@ -2,7 +2,6 @@
 using SeleniumAutomationLibrary;
 using System;
 using System.Collections.Generic;
-using System.DirectoryServices.ActiveDirectory;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,11 +11,21 @@ namespace SeleniumGUI {
     /// </summary>
     public partial class MainWindow : Window {
         private Employee _employee = new Employee();
+        private string _ldapPathToCurrentDomain = Domains.LdapPathToCurrentDomain;                    
 
-        public MainWindow() {
+    public MainWindow() {
             InitializeComponent();
             tbUserName.Focus();
             MouseDown += delegate { DragMove(); };
+            switch (Domains.CurrentDomainCountry) {
+                case Country.BY:
+                    radiobtnBelarus.IsChecked = true;
+                    break;
+
+                case Country.UA:
+                    radiobtnUkraine.IsChecked = true;
+                    break;
+            }
         }
 
         private void btnRecruit_Click(object sender, RoutedEventArgs e) {
@@ -92,13 +101,12 @@ namespace SeleniumGUI {
         private void btnFind_Click(object sender, RoutedEventArgs e) {            
             try {
                 using (new WaitCursor()) {
-                    lstEmployees.Items.Clear();
-                    tbtnSubcontractor.IsChecked = false;
-                    radiobtnUkraine.IsChecked = false;
-                    radiobtnBelarus.IsChecked = false;
-                    string currentLDAPDomain = $"LDAP://{Domain.GetComputerDomain()}";
+                    ResetStateOfControls();
+
+                    SelectCountryOfCurrentDomain();
+
                     string employeeToSeek = tbUserName.Text;
-                    List<string> listOfEmployees = new ActiveDirectory().GetListOfEmployee(currentLDAPDomain, employeeToSeek);
+                    List<string> listOfEmployees = new ActiveDirectory().GetListOfEmployee(_ldapPathToCurrentDomain, employeeToSeek);
 
                     if (listOfEmployees.Count > 0) {
                         foreach (var item in listOfEmployees) {
@@ -114,12 +122,19 @@ namespace SeleniumGUI {
             }
         }
 
+        private void ResetStateOfControls() {
+            lstEmployees.Items.Clear();
+            tbEmployeeInfo.Text = "";
+            tbtnSubcontractor.IsChecked = false;
+            radiobtnUkraine.IsChecked = false;
+            radiobtnBelarus.IsChecked = false;
+        }
+
         private void lstEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             string emp = lstEmployees.SelectedItem?.ToString();
 
-            if (emp != null) {
-                string currentDomain = $"LDAP://{Domain.GetComputerDomain()}";
-                _employee = new ActiveDirectory().GetEmployee(currentDomain, emp);
+            if (emp != null) {                
+                _employee = new ActiveDirectory().GetEmployee(_ldapPathToCurrentDomain, emp);
                 tbEmployeeInfo.Text = _employee.ToString(); 
             }
         }
@@ -134,7 +149,30 @@ namespace SeleniumGUI {
         }
 
         private void tbtnAnotheDomain_Click(object sender, RoutedEventArgs e) {
+            ResetStateOfControls();
+            SelectCountryOfCurrentDomain();
+        }
 
+        private void SelectCountryOfCurrentDomain() {
+            if (tbtnAnotheDomain.IsChecked == true) {
+                _ldapPathToCurrentDomain = Domains.LdapPathToAnotherDomain;
+
+                if (Domains.AnotherDomainCountry.Equals(Country.BY)) {
+                    radiobtnBelarus.IsChecked = true;
+                }
+                else if (Domains.AnotherDomainCountry.Equals(Country.UA)) {
+                    radiobtnUkraine.IsChecked = true;
+                }
+            }
+            else {
+                _ldapPathToCurrentDomain = Domains.LdapPathToCurrentDomain;
+                if (Domains.CurrentDomainCountry.Equals(Country.BY)) {
+                    radiobtnBelarus.IsChecked = true;
+                }
+                else if (Domains.CurrentDomainCountry.Equals(Country.UA)) {
+                    radiobtnUkraine.IsChecked = true;
+                }
+            }
         }
     }
 }

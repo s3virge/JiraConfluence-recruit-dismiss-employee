@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Confluence.cs" />
-    <Compile Include="Country.cs" />
     <Compile Include="CreatingAnEmployee.cs" />
     <Compile Include="DismissingAnEmployee.cs" />
     <Compile Include="Jira.cs" />
