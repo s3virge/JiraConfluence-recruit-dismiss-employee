@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using ActiveDirectoryLibrary;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
 
@@ -36,6 +37,42 @@ namespace SeleniumAutomationLibrary {
             _driver.FindElement(By.CssSelector("option[value='jira-users-intetics']")).Click();
             _driver.FindElement(By.CssSelector("option[value='jira-users']")).Click();
             _driver.FindElement(By.Id("user-edit-groups-leave")).Click();
+        }
+
+        public void Recruit(Employee employee) {
+            //open new tab. Does not work
+            //driver.FindElement(By.TagName("body")).SendKeys(Keys.Control+"t");
+
+            _driver.Navigate().GoToUrl("https://jira.intetics.com/secure/admin/user/AddUser!default.jspa");
+            _wait.Until(webDriver => webDriver.FindElement(By.Id("user-create")).Displayed);
+
+            _driver.FindElement(By.Id("user-create-email")).SendKeys(employee.Mail);
+            _driver.FindElement(By.Id("user-create-fullname")).SendKeys(employee.FullName);
+            _driver.FindElement(By.Id("user-create-username")).SendKeys(employee.Login);
+            if (employee.Country.Equals(Country.UA) == true) {
+                //in dropdown list need to select Kharkiv
+                _driver.FindElement(By.Id("user-create-directoryId")).SendKeys("Kharkiv");
+            }
+            _driver.FindElement(By.Id("user-create-submit")).Click();
+            //driver.FindElement(By.Id("user-create-cancel")).Click();
+            //if user not a subcontractor
+            if (employee.Subcontractor == false) {
+                AddToGroup(employee);
+            }
+        }
+
+        private void AddToGroup(Employee empl) {
+            _wait.Until(webDriver => webDriver.FindElement(By.Id("user-filter-userSearchFilter")).Displayed);
+            string editGroupHref = _driver.FindElement(By.Id($"editgroups_{empl.Login}")).GetAttribute("href");
+            //go to Manage user groups
+            _driver.Navigate().GoToUrl(editGroupHref);
+
+            _driver.FindElement(By.Id("groupsToJoin-textarea")).SendKeys("jira-users-intetics");
+            _wait.Until(webDriver => webDriver.FindElement(By.ClassName("ajs-layer")).Displayed);
+            _driver.FindElement(By.Id("groupsToJoin-textarea")).SendKeys(Keys.Enter);
+            _driver.FindElement(By.Id("user-edit-groups-join")).Click();
+
+            _driver.Navigate().GoToUrl($"https://jira.intetics.com/secure/admin/user/UserBrowser.jspa?createdUser={empl.Login}");
         }
     }
 }

@@ -16,7 +16,9 @@ namespace SeleniumAutomationLibrary {
             _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
         }
 
-        public void Login(string login, string password) {
+        public void Login() {
+            const string login = "v.kobzar@intetics.com";
+            const string password = "2XeytrEV)78";
             _driver.Navigate().GoToUrl("https://login.microsoftonline.com");
             _driver.Manage().Window.Maximize();
 

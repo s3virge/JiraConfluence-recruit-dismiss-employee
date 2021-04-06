@@ -31,5 +31,33 @@ namespace SeleniumAutomationLibrary {
             _driver.FindElement(By.Id("password")).SendKeys(password);
             _driver.FindElement(By.Id("authenticateButton")).Click();
         }
+
+        public void Recruit(Employee emp) {
+            LoginInToConfluence();
+            ProcessUserCreatingConfluence(emp);
+            if (emp.Subcontractor == false) {
+                AddToGroup(emp);
+            }
+        }
+
+        private void ProcessUserCreatingConfluence(Employee emplo) {
+            _wait.Until(webDriver => webDriver.FindElement(By.Id("create-pane")).Displayed);
+            _driver.FindElement(By.Id("username")).SendKeys(emplo.Login);
+            _driver.FindElement(By.Id("fullname")).SendKeys(emplo.FullName);
+            _driver.FindElement(By.Id("email")).SendKeys(emplo.Mail);
+            const string pass = "1";
+            _driver.FindElement(By.Id("password")).SendKeys(pass);
+            _driver.FindElement(By.Id("confirm")).SendKeys(pass);
+            _driver.FindElement(By.XPath("//*[@id='create-user-form']/form/fieldset/div[7]/div/input")).SendKeys(Keys.Enter);
+        }
+
+        private void AddToGroup(Employee epl) {
+            _driver.Navigate().GoToUrl($"https://confluence.intetics.com/confluence/admin/users/editusergroups-start.action?username={epl.Login}");
+            IWebElement checkBoxEmployees = _driver.FindElement(By.Id("confluence-employees"));
+            if (checkBoxEmployees.Selected == false) {
+                checkBoxEmployees.Click();
+            }
+            _driver.FindElement(By.Name("save")).Click();
+        }
     }
 }

@@ -11,34 +11,35 @@ namespace SeleniumAutomationLibrary {
             //var driverService = ChromeDriverService.CreateDefaultService(@"D:\VSProjects\SeleniumAutomation\SeleniumAutomation");
             driverService.HideCommandPromptWindow = true;
 
-            IWebDriver driver = new ChromeDriver(driverService, new ChromeOptions());
+            using (IWebDriver driver = new ChromeDriver(driverService, new ChromeOptions())) {
 
-            try {
-                new Microsoft(driver).Login("v.kobzar@intetics.com", "2XeytrEV)78");
-            }
-            catch (Exception msExeption) {
-                throw new Exception(msExeption.Message);
-            }
-
-            try {
-                new Jira(driver).Dismiss(employee.Login);
-            }
-            catch (Exception jiraExeption) {
-                MessageBoxResult result = MessageBox.Show($"{jiraExeption.Message} \n\n Continue the execution of the script?", "Something went wrong!", MessageBoxButton.YesNo, MessageBoxImage.Error);
-                if (result == MessageBoxResult.No) {
-                    throw new Exception(jiraExeption.Message);
+                try {
+                    new Microsoft(driver).Login();
                 }
-            }
+                catch (Exception msExeption) {
+                    throw new Exception(msExeption.Message);
+                }
 
-            try {
-                driver.SwitchTo().NewWindow(WindowType.Tab);
-                new Confluence(driver).Dismiss(employee);
-            }
-            catch (Exception confluenceExeption) {
-                throw new Exception(confluenceExeption.Message);
-            }
+                try {
+                    new Jira(driver).Dismiss(employee.Login);
+                }
+                catch (Exception jiraExeption) {
+                    MessageBoxResult result = MessageBox.Show($"{jiraExeption.Message} \n\n Continue the execution of the script?", "Something went wrong!", MessageBoxButton.YesNo, MessageBoxImage.Error);
+                    if (result == MessageBoxResult.No) {
+                        throw new Exception(jiraExeption.Message);
+                    }
+                }
 
-            OnProcessCompleted(EventArgs.Empty);
+                try {
+                    driver.SwitchTo().NewWindow(WindowType.Tab);
+                    new Confluence(driver).Dismiss(employee);
+                }
+                catch (Exception confluenceExeption) {
+                    throw new Exception(confluenceExeption.Message);
+                }
+
+                OnProcessCompleted(EventArgs.Empty);
+            }
         }
 
         // declaring an event using built-in EventHandler
@@ -50,6 +51,6 @@ namespace SeleniumAutomationLibrary {
 }
 
 
-    
+
 
 
