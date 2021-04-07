@@ -18,8 +18,16 @@ namespace SeleniumAutomationLibrary {
             _driver.Navigate().GoToUrl($"https://confluence.intetics.com/confluence/admin/users/editusergroups-start.action?username={employee.Login}");
             _wait.Until(webDriver => webDriver.FindElement(By.Id("admin-content")).Displayed);
 
-            _driver.FindElement(By.Id("confluence-employees")).Click();
-            _driver.FindElement(By.Id("confluence-users")).Click();
+            var chekbox = _driver.FindElement(By.Id("confluence-employees"));
+            if (chekbox.Selected) {
+                chekbox.Click();
+            }
+
+            chekbox = _driver.FindElement(By.Id("confluence-users"));
+            if (chekbox.Selected) {
+                chekbox.Click();
+            }
+
             _driver.FindElement(By.Id("save-btn1")).Click();
         }
 

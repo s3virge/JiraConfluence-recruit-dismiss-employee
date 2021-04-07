@@ -20,7 +20,7 @@ namespace SeleniumAutomationLibrary {
                     throw new Exception(msExeption.Message);
                 }
 
-                try {
+                try {                    
                     new Jira(driver).Dismiss(employee.Login);
                 }
                 catch (Exception jiraExeption) {

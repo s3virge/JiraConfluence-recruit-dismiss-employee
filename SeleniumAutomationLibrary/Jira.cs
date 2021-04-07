@@ -33,9 +33,21 @@ namespace SeleniumAutomationLibrary {
             _driver.Navigate().GoToUrl(editGroupHref);
             _wait.Until(webDriver => webDriver.FindElement(By.Id("user-edit-groups")).Displayed);
 
-            var groupToLeave = _driver.FindElements(By.Id("groupsToLeave"));
-            _driver.FindElement(By.CssSelector("option[value='jira-users-intetics']")).Click();
-            _driver.FindElement(By.CssSelector("option[value='jira-users']")).Click();
+            try {
+                _driver.FindElement(By.CssSelector("option[value='jira-users']")).Click();                
+            }
+            catch {
+                //trap here if jira-users items does not exist
+                Console.WriteLine("jira-users options does not exist.");
+            }
+
+            try {
+                _driver.FindElement(By.CssSelector("option[value='jira-users-intetics']")).Click();
+            }
+            catch {
+                Console.WriteLine("jira-users options does not exist.");
+            }
+
             _driver.FindElement(By.Id("user-edit-groups-leave")).Click();
         }
 
