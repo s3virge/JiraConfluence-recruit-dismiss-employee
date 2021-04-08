@@ -2,10 +2,13 @@
 
 namespace ActiveDirectoryLibrary {
     public class Domains {
-        private const string UADomain = "intetics.com.ua";
-        private const string BYDomain = "atwss.com";
+        private const string UADomainName = "intetics.com.ua";
+        private const string BYDomainName = "atwss.com";
         private static string anotherDomain;
-        
+
+        public static string UAName { get; private set; } = UADomainName;
+        public static string BYName { get; private set; } = BYDomainName;
+
         /// <summary>
         /// name of current domain like atwss.com
         /// </summary>
@@ -17,10 +20,10 @@ namespace ActiveDirectoryLibrary {
       
         public static string LdapPathToCurrentDomain { 
             get {
-                if (Current.Equals(UADomain)) {
+                if (Current.Equals(UADomainName)) {
                     currentDomainCountry = Country.UA;
                 }
-                else if (Current.Equals(BYDomain)) {
+                else if (Current.Equals(BYDomainName)) {
                     currentDomainCountry = Country.BY;
                 }
                 return $"LDAP://{Current}"; 
@@ -30,10 +33,10 @@ namespace ActiveDirectoryLibrary {
         private static string currentDomainCountry = null;
         public static string CurrentDomainCountry { 
             get {               
-                if (Current.Equals(UADomain)) {
+                if (Current.Equals(UADomainName)) {
                     currentDomainCountry = Country.UA;
                 }
-                else if (Current.Equals(BYDomain)) {
+                else if (Current.Equals(BYDomainName)) {
                     currentDomainCountry = Country.BY;
                 }
                 return currentDomainCountry;                
@@ -44,10 +47,10 @@ namespace ActiveDirectoryLibrary {
         private static string anotherDomainCountry = null;
         public static string AnotherDomainCountry { 
             get {               
-                if (Current.Equals(UADomain)) {
+                if (Current.Equals(UADomainName)) {
                     anotherDomainCountry = Country.BY;
                 }
-                else if (Current.Equals(BYDomain)) {
+                else if (Current.Equals(BYDomainName)) {
                     anotherDomainCountry = Country.UA;
                 }
                 return anotherDomainCountry;                
@@ -57,12 +60,12 @@ namespace ActiveDirectoryLibrary {
 
         public static string LdapPathToAnotherDomain {
             get {
-                if (Current.Equals(UADomain) == true) {
-                    anotherDomain = BYDomain;
+                if (Current.Equals(UADomainName) == true) {
+                    anotherDomain = BYDomainName;
                     anotherDomainCountry = Country.BY;
                 }
-                else if (Current.Equals(BYDomain) == true) {
-                    anotherDomain = UADomain;
+                else if (Current.Equals(BYDomainName) == true) {
+                    anotherDomain = UADomainName;
                     anotherDomainCountry = Country.UA;
                 }
                 return $"LDAP://{anotherDomain}";

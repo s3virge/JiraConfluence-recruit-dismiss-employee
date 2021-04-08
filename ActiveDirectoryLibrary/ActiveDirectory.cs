@@ -109,6 +109,13 @@ namespace ActiveDirectoryLibrary{
                 employee.Office = SelectPropertie(resEnt, "physicalDeliveryOfficeName");
                 employee.Manager = ExtractNameFromCN(SelectPropertie(resEnt, "manager"));
 
+                if (employee.CanonicalName.Contains(Domains.UAName)) {
+                    employee.Country = Country.UA;
+                } 
+                else if(employee.CanonicalName.Contains(Domains.BYName)) {
+                        employee.Country = Country.BY;
+                }
+
                 //string propVal = SelectPropertie(resEnt, "msDS-User-Account-Control-Computed");
                 //if (string.IsNullOrEmpty(propVal) != true) {
                 //    int attribute = Convert.ToInt32(propVal);

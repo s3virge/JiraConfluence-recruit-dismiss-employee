@@ -34,7 +34,7 @@ namespace SeleniumAutomationLibrary {
                     }
 
                     try {
-                        new Jira(driver).Recruit(coworker);                        
+                        //new Jira(driver).Recruit(coworker);                        
                     }
                     catch (Exception jiraExeption) {
                         MessageBoxResult result = MessageBox.Show($"{jiraExeption.Message} \n\n Continue the execution of the script?", "Something went wrong!", MessageBoxButton.YesNo, MessageBoxImage.Error);

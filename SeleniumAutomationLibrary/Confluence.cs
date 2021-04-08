@@ -49,6 +49,7 @@ namespace SeleniumAutomationLibrary {
         }
 
         private void ProcessUserCreatingConfluence(Employee emplo) {
+            _driver.Navigate().GoToUrl($"https://confluence.intetics.com/confluence/admin/users/createuser.action");
             _wait.Until(webDriver => webDriver.FindElement(By.Id("create-pane")).Displayed);
             _driver.FindElement(By.Id("username")).SendKeys(emplo.Login);
             _driver.FindElement(By.Id("fullname")).SendKeys(emplo.FullName);

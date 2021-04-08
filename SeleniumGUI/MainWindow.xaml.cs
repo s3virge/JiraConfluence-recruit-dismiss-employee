@@ -87,7 +87,7 @@ namespace SeleniumGUI {
             MessageBox.Show($"The employee {_employee.FullName} ({_employee.Login}) was successfully created in jira & confluence.");
         }
 
-        private void CheckeHandler(object sender, RoutedEventArgs e) {
+        private void CheckButtonsHandler(object sender, RoutedEventArgs e) {
             RadioButton rb = sender as RadioButton;
             string rbContent = rb.Content.ToString();
             if (rbContent.Equals(Country.BY) == true ) {
@@ -135,6 +135,7 @@ namespace SeleniumGUI {
 
             if (emp != null) {                
                 _employee = new ActiveDirectory().GetEmployee(_ldapPathToCurrentDomain, emp);
+                
                 if (_employee.CanonicalName.Contains("Subcontractors")) {
                     tbtnSubcontractor.IsChecked = true;
                 }
