@@ -16,7 +16,7 @@ namespace SeleniumGUI {
     public MainWindow() {
             InitializeComponent();
             tbUserName.Focus();
-            MouseDown += delegate { DragMove(); };
+            MouseLeftButtonDown += delegate { DragMove(); };
             switch (Domains.CurrentDomainCountry) {
                 case Country.BY:
                     radiobtnBelarus.IsChecked = true;
