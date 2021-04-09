@@ -105,7 +105,7 @@ namespace SeleniumGUI {
 
                     SelectCountryOfCurrentDomain();
 
-                    string employeeToSeek = tbUserName.Text;
+                    string employeeToSeek = tbUserName.Text.Trim();
                     List<string> listOfEmployees = new ActiveDirectory().GetListOfEmployee(_ldapPathToCurrentDomain, employeeToSeek);
 
                     if (listOfEmployees.Count > 0) {
