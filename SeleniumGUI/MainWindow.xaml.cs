@@ -135,12 +135,14 @@ namespace SeleniumGUI {
 
             if (emp != null) {                
                 _employee = new ActiveDirectory().GetEmployee(_ldapPathToCurrentDomain, emp);
-                
+                                
                 if (_employee.CanonicalName.Contains("Subcontractors")) {
                     tbtnSubcontractor.IsChecked = true;
+                    _employee.Subcontractor = true;
                 }
                 else {
                     tbtnSubcontractor.IsChecked = false;
+                    _employee.Subcontractor = false;
                 }
                 tbEmployeeInfo.Text = _employee.ToString(); 
             }
