@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SeleniumGUI"
         mc:Ignorable="d"
-        Title="Jira and confluence recruit and dismiss employee" Height="397.964" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Icon="jira-icon.png">
+        Title="Jira and confluence recruit and dismiss employee" Height="397.964" Width="800" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Icon="jira-icon.png">
 
     <Grid Background="#FF82ACBF">
         <Grid Background="#FFE5E5E5" Margin="0,0,0,63">                

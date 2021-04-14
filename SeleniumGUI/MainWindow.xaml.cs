@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace SeleniumGUI {
     /// <summary>
@@ -11,9 +12,9 @@ namespace SeleniumGUI {
     /// </summary>
     public partial class MainWindow : Window {
         private Employee _employee = new Employee();
-        private string _ldapPathToCurrentDomain = Domains.LdapPathToCurrentDomain;                    
+        private string _ldapPathToCurrentDomain = Domains.LdapPathToCurrentDomain;
 
-    public MainWindow() {
+        public MainWindow() {
             InitializeComponent();
             tbUserName.Focus();
             MouseLeftButtonDown += delegate { DragMove(); };
@@ -29,12 +30,12 @@ namespace SeleniumGUI {
         }
 
         private void btnRecruit_Click(object sender, RoutedEventArgs e) {
-            try {                
+            try {
                 if (string.IsNullOrEmpty(_employee.Login) == true) {
                     tbUserName.Focus();
                     throw new Exception("Employee to recruit does not selected.");
                 }
-                
+
                 if (string.IsNullOrEmpty(_employee.Country) == true) {
                     radiobtnUkraine.Focus();
                     throw new Exception("Employee country from does not selected.");
@@ -43,7 +44,7 @@ namespace SeleniumGUI {
                 var result = MessageBox.Show($"Coworker {_employee.FullName} will be created. \n\nDo you want to continue?", "Continue", MessageBoxButton.YesNo, MessageBoxImage.Warning);
                 if (result == MessageBoxResult.Yes) {
                     StartCreatingAnEmployee(_employee);
-                }                
+                }
             }
             catch (Exception seleniumExeption) {
                 MessageBox.Show(seleniumExeption.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -71,12 +72,12 @@ namespace SeleniumGUI {
             var dismissingAnEmployee = new DismissingAnEmployee();
             dismissingAnEmployee.ProcessCompleted += Selenium_ProcessCompleted;
             dismissingAnEmployee.Launch(employee);
-        }        
+        }
 
         private void StartCreatingAnEmployee(Employee userToWorkWith) {
             var creatingAnEmployee = new CreatingAnEmployee();
             creatingAnEmployee.ProcessCompleted += Selenium_ProcessCompleted;
-            creatingAnEmployee.Launch(userToWorkWith);            
+            creatingAnEmployee.Launch(userToWorkWith);
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e) {
@@ -90,7 +91,7 @@ namespace SeleniumGUI {
         private void CheckButtonsHandler(object sender, RoutedEventArgs e) {
             RadioButton rb = sender as RadioButton;
             string rbContent = rb.Content.ToString();
-            if (rbContent.Equals(Country.BY) == true ) {
+            if (rbContent.Equals(Country.BY) == true) {
                 _employee.Country = Country.BY;
             }
             else if (rbContent.Equals(Country.UA) == true) {
@@ -98,7 +99,7 @@ namespace SeleniumGUI {
             }
         }
 
-        private void btnFind_Click(object sender, RoutedEventArgs e) {            
+        private void btnFind_Click(object sender, RoutedEventArgs e) {
             try {
                 using (new WaitCursor()) {
                     ResetStateOfControls();
@@ -130,12 +131,28 @@ namespace SeleniumGUI {
             radiobtnBelarus.IsChecked = false;
         }
 
+        private void MarkSelectedListItemAsDisabled(ListBox lbUsers, bool disabled) {
+            var selectedItemIndex = lbUsers.SelectedIndex;
+            ListBoxItem lbi = (ListBoxItem)lbUsers.ItemContainerGenerator.ContainerFromIndex(selectedItemIndex);
+
+            if (lbi == null) {
+                return;
+            }
+
+            if (disabled) {
+                lbi.Foreground = Brushes.Gray;
+            }
+            else {
+                lbi.Foreground = Brushes.Black;
+            }
+        }
+
         private void lstEmployees_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             string emp = lstEmployees.SelectedItem?.ToString();
 
-            if (emp != null) {                
+            if (emp != null) {
                 _employee = new ActiveDirectory().GetEmployee(_ldapPathToCurrentDomain, emp);
-                                
+
                 if (_employee.CanonicalName.Contains("Subcontractors")) {
                     tbtnSubcontractor.IsChecked = true;
                     _employee.Subcontractor = true;
@@ -144,7 +161,15 @@ namespace SeleniumGUI {
                     tbtnSubcontractor.IsChecked = false;
                     _employee.Subcontractor = false;
                 }
-                tbEmployeeInfo.Text = _employee.ToString(); 
+
+                if (_employee.CanonicalName.Contains("Disabled") == false) {
+                    MarkSelectedListItemAsDisabled(lstEmployees, false);
+                }
+                else {
+                    MarkSelectedListItemAsDisabled(lstEmployees, true);
+                }
+
+                tbEmployeeInfo.Text = _employee.ToString();
             }
         }
 
