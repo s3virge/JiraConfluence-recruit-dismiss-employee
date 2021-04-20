@@ -70,13 +70,13 @@ namespace SeleniumGUI {
 
         private void StartDismissingEmployee(Employee employee) {
             var dismissingAnEmployee = new DismissingAnEmployee();
-            dismissingAnEmployee.ProcessCompleted += Selenium_ProcessCompleted;
+            dismissingAnEmployee.ProcessCompleted += EmployeeDismissing_ProcessCompleted;
             dismissingAnEmployee.Launch(employee);
         }
 
         private void StartCreatingAnEmployee(Employee userToWorkWith) {
             var creatingAnEmployee = new CreatingAnEmployee();
-            creatingAnEmployee.ProcessCompleted += Selenium_ProcessCompleted;
+            creatingAnEmployee.ProcessCompleted += EmployeeCreating_ProcessCompleted;
             creatingAnEmployee.Launch(userToWorkWith);
         }
 
@@ -84,8 +84,16 @@ namespace SeleniumGUI {
             Close();
         }
 
-        private void Selenium_ProcessCompleted(object sender, EventArgs e) {
+        private void EmployeeCreating_ProcessCompleted(object sender, EventArgs e) {
             MessageBox.Show($"The employee {_employee.FullName} ({_employee.Login}) was successfully created in jira & confluence.");
+        }
+        
+        private void EmployeeDismissing_ProcessCompleted(object sender, EventArgs e) {
+            MessageBox.Show($"The employee {_employee.FullName} ({_employee.Login}) was successfully dismissed in jira & confluence.");
+        } 
+        
+        private void Migration_ProcessCompleted(object sender, EventArgs e) {
+            MessageBox.Show($"Migration batch for {_employee.FullName} ({_employee.Login}) was created.");
         }
 
         private void CheckButtonsHandler(object sender, RoutedEventArgs e) {
@@ -207,6 +215,29 @@ namespace SeleniumGUI {
                     radiobtnUkraine.IsChecked = true;
                 }
             }
+        }
+
+        private void btnMigrate_Click(object sender, RoutedEventArgs e) {
+            try {
+                if (string.IsNullOrEmpty(_employee.Login) == true) {
+                    tbUserName.Focus();
+                    throw new Exception("Employee to migrate does not selected.");
+                }
+
+                var result = MessageBox.Show($"The mailbox of {_employee.FullName} will be migrate to MO365. \n\nDo you want to continue?", "Continue", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes) {
+                    StartMigration(_employee);
+                }
+            }
+            catch (Exception seleniumExeption) {
+                MessageBox.Show(seleniumExeption.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void StartMigration(Employee employee) {
+            Microsoft365 ms = new Microsoft365();
+            ms.ProcessCompleted += Migration_ProcessCompleted;
+            ms.Migrate(employee.Login);
         }
     }
 }
