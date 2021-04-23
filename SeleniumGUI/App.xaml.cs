@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ActiveDirectoryLibrary;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -11,5 +12,13 @@ namespace SeleniumGUI {
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application {
+        App() {
+            bool admin = new ActiveDirectory().IsDomainAdministrator();
+
+            if (admin == false) {
+                MessageBox.Show("Hey! You are not admin. Bye.");
+                Current.Shutdown();
+            }
+        }
     }
 }

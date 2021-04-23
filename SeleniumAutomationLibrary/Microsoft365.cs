@@ -41,6 +41,7 @@ namespace SeleniumAutomationLibrary {
                     }
 
                     ProcessMailMigration(driver);
+                    OnProcessCompleted(EventArgs.Empty);
                 }
                 catch (Exception ex) {
                     throw new Exception(ex.Message);
