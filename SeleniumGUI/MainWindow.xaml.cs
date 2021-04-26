@@ -165,6 +165,10 @@ namespace SeleniumGUI {
                     tbtnSubcontractor.IsChecked = true;
                     _employee.Subcontractor = true;
                 }
+                if (_employee.CanonicalName.Contains("External")) {
+                    tbtnSubcontractor.IsChecked = true;
+                    _employee.Subcontractor = true;
+                }
                 else {
                     tbtnSubcontractor.IsChecked = false;
                     _employee.Subcontractor = false;
