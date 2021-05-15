@@ -95,6 +95,9 @@ namespace SeleniumGUI {
         private void Migration_ProcessCompleted(object sender, EventArgs e) {
             MessageBox.Show($"Migration batch for {_employee.FullName} ({_employee.Login}) was created.");
         }
+        private void Createexchangeusermailbox_ProcessCompleted(object sender, EventArgs e) {
+            MessageBox.Show($"MailBbox for {_employee.FullName} ({_employee.Login}) was created.");
+        }
 
         private void CheckButtonsHandler(object sender, RoutedEventArgs e) {
             RadioButton rb = sender as RadioButton;
@@ -161,11 +164,8 @@ namespace SeleniumGUI {
             if (emp != null) {
                 _employee = new ActiveDirectory().GetEmployee(_ldapPathToCurrentDomain, emp);
 
-                if (_employee.CanonicalName.Contains("Subcontractors")) {
-                    tbtnSubcontractor.IsChecked = true;
-                    _employee.Subcontractor = true;
-                }
-                if (_employee.CanonicalName.Contains("External")) {
+                if (_employee.CanonicalName.Contains("Subcontractors") ||
+                    _employee.CanonicalName.Contains("External")) {
                     tbtnSubcontractor.IsChecked = true;
                     _employee.Subcontractor = true;
                 }
@@ -241,7 +241,26 @@ namespace SeleniumGUI {
         private void StartMigration(Employee employee) {
             Microsoft365 ms = new Microsoft365();
             ms.ProcessCompleted += Migration_ProcessCompleted;
-            ms.Migrate(employee.Login);
+            ms.Migrate(employee.FullName);
         }
+
+        private void btnCreateMailBox_Click(object sender, RoutedEventArgs e) {
+            try {
+                if (string.IsNullOrEmpty(_employee.Login) == true) {
+                    tbUserName.Focus();
+                    throw new Exception("Employee to create mailbox does not selected.");
+                }
+
+                var result = MessageBox.Show($"The mailbox for {_employee.FullName} will be created. \n\nDo you want to continue?", "Continue", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                if (result == MessageBoxResult.Yes) {
+                    CreateExchangeUserMailbox createexchangeusermailbox = new CreateExchangeUserMailbox();
+                    createexchangeusermailbox.ProcessCompleted += Createexchangeusermailbox_ProcessCompleted;
+                    createexchangeusermailbox.Launch(_employee);
+                }
+            }
+            catch (Exception seleniumExeption) {
+                MessageBox.Show(seleniumExeption.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }            
+        }      
     }
 }

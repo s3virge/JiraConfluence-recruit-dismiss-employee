@@ -47,8 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Confluence.cs" />
+    <Compile Include="CreateExchangeUserMailbox.cs" />
     <Compile Include="CreatingAnEmployee.cs" />
     <Compile Include="DismissingAnEmployee.cs" />
+    <Compile Include="Exchange.cs" />
     <Compile Include="Jira.cs" />
     <Compile Include="Microsoft.cs" />
     <Compile Include="Microsoft365.cs" />
