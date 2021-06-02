@@ -1,7 +1,9 @@
 ﻿using ActiveDirectoryLibrary;
+using Microsoft.Win32;
 using SeleniumAutomationLibrary;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -79,7 +81,7 @@ namespace SeleniumGUI {
             creatingAnEmployee.ProcessCompleted += EmployeeCreating_ProcessCompleted;
             creatingAnEmployee.Launch(userToWorkWith);
         }
-
+       
         private void btnCancel_Click(object sender, RoutedEventArgs e) {
             Close();
         }
@@ -261,6 +263,49 @@ namespace SeleniumGUI {
             catch (Exception seleniumExeption) {
                 MessageBox.Show(seleniumExeption.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }            
-        }      
+        }
+
+        private void StartCreatingBatchOfEmployee() {
+            var employeesBatch = new AddListOfEmployees();
+            employeesBatch.PrintToOutput += EmployeesBatch_PrintToOutput;
+
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.ShowDialog();
+
+            try {
+                var text = File.ReadAllText(dlg.FileName);
+                employeesBatch.Launch(text);
+            }
+            catch (Exception ception) {
+                MessageBox.Show(ception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }            
+        }
+
+        private void EmployeesBatch_PrintToOutput(object sender, string message) {
+            tbEmployeeInfo.Text += "\n" + message;
+        }
+
+        private void btnAddFromFile_Click(object sender, RoutedEventArgs e) {
+            StartCreatingBatchOfEmployee();            
+        }
+
+        private void btnFireOffFromFile_Click(object sender, RoutedEventArgs e)
+        {
+            var emplToFireOff = new FireOffListOfEmployee();
+            emplToFireOff.PrintToOutput += EmployeesBatch_PrintToOutput;
+
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.ShowDialog();
+
+            try
+            {
+                var text = File.ReadAllText(dlg.FileName);
+                emplToFireOff.Launch(text);
+            }
+            catch (Exception ception)
+            {
+                MessageBox.Show(ception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
     }
 }

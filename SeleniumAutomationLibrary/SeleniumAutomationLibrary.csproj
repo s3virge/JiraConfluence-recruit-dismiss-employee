@@ -31,10 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,7 +56,9 @@
     <Compile Include="CreatingAnEmployee.cs" />
     <Compile Include="DismissingAnEmployee.cs" />
     <Compile Include="Exchange.cs" />
+    <Compile Include="FireOffListOfEmployee.cs" />
     <Compile Include="Jira.cs" />
+    <Compile Include="AddListOfEmployees.cs" />
     <Compile Include="Microsoft.cs" />
     <Compile Include="Microsoft365.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

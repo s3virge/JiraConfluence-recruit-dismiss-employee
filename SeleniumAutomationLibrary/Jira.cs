@@ -2,21 +2,23 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Threading;
 
 namespace SeleniumAutomationLibrary {
     class Jira {
         private WebDriverWait _wait;
         private IWebDriver _driver;
         //private string _userLogin;
+        private const int _waitTime = 60;
 
         public Jira(IWebDriver driver) {
             _driver = driver;           
-            _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
+            _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(_waitTime));
         }
 
-        public void Dismiss(string userLogin) {
-            FindUser(userLogin);
-            RemoveFromDefaultGroups(userLogin);
+        public void Dismiss(Employee userLogin) {
+            FindUser(userLogin.Login);
+            RemoveFromDefaultGroups(userLogin.Login);
         }
 
         private void FindUser(string userToFind) {
@@ -51,10 +53,7 @@ namespace SeleniumAutomationLibrary {
             _driver.FindElement(By.Id("user-edit-groups-leave")).Click();
         }
 
-        public void Recruit(Employee employee) {
-            //open new tab. Does not work
-            //driver.FindElement(By.TagName("body")).SendKeys(Keys.Control+"t");
-
+        public bool Recruit(Employee employee) {
             _driver.Navigate().GoToUrl("https://jira.intetics.com/secure/admin/user/AddUser!default.jspa");
             _wait.Until(webDriver => webDriver.FindElement(By.Id("user-create")).Displayed);
 
@@ -66,11 +65,20 @@ namespace SeleniumAutomationLibrary {
                 _driver.FindElement(By.Id("user-create-directoryId")).SendKeys("Kharkiv");
             }
             _driver.FindElement(By.Id("user-create-submit")).Click();
+
+            Thread.Sleep(2000);
+
+            if (_driver.FindElements(By.Id("user-create-username-error")).Count != 0) {
+                return true;
+            }
+
             //driver.FindElement(By.Id("user-create-cancel")).Click();
             //if user not a subcontractor
             if (employee.Subcontractor == false) {
                 AddToGroup(employee);
             }
+
+            return true;
         }
 
         private void AddToGroup(Employee empl) {
