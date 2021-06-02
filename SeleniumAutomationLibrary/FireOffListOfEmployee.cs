@@ -1,4 +1,15 @@
 ﻿
+using ActiveDirectoryLibrary;
+using log4net;
+using log4net.Config;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
 
 namespace SeleniumAutomationLibrary
 {
@@ -6,14 +17,14 @@ namespace SeleniumAutomationLibrary
     {
         // Define a static logger variable so that it references the
         // Logger instance named "MyApp".
-        private static readonly Ilog log = LogManager.GetLogger(typeof(FireOffListOfEmployee));
-        
+        private static readonly ILog log = LogManager.GetLogger(typeof(FireOffListOfEmployee));
+
         public FireOffListOfEmployee()
         {
             // Set up a simple configuration that logs on the console.
             BasicConfigurator.Configure();
         }
-        
+
         // declaring an event using built-in EventHandler
         public event EventHandler ProcessCompleted;
 
@@ -28,7 +39,7 @@ namespace SeleniumAutomationLibrary
         {
             PrintToOutput?.Invoke(this, e);
         }
-        
+
         /// <summary>
         /// receive list of employees separeted by comma as string
         /// </summary>
@@ -95,7 +106,7 @@ namespace SeleniumAutomationLibrary
                         try
                         {
                             new Jira(driver).Dismiss(employee);
-                            OnPrintToOutput($"{employee.FullName} ({employee.Login}) was dismiss in jira");                            
+                            OnPrintToOutput($"{employee.FullName} ({employee.Login}) was dismiss in jira");
                         }
                         catch (Exception jiraExeption)
                         {
