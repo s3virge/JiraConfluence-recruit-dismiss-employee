@@ -1,25 +1,18 @@
 ﻿using ActiveDirectoryLibrary;
-using log4net;
-using log4net.Config;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace SeleniumAutomationLibrary
 {
     public class AddListOfEmployees
     {
-        // Define a static logger variable so that it references the
-        // Logger instance named "MyApp".
-        private static readonly ILog log = LogManager.GetLogger(typeof(AddListOfEmployees));
-
         // declaring an event using built-in EventHandler
         public event EventHandler ProcessCompleted;
+
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         protected virtual void OnProcessCompleted(EventArgs e)
         {
@@ -35,8 +28,6 @@ namespace SeleniumAutomationLibrary
 
         public AddListOfEmployees()
         {
-            // Set up a simple configuration that logs on the console.
-            BasicConfigurator.Configure();
         }
 
         /// <summary>
@@ -130,7 +121,7 @@ namespace SeleniumAutomationLibrary
                         }
                         catch (Exception confluenceExeption)
                         {
-                            log.Error($"Something went wrong when creating {em} in confluence");
+                            //log.Error($"Something went wrong when creating {em} in confluence");
                             OnPrintToOutput($"Something went wrong when creating {em} in confluence");
                             throw new Exception(confluenceExeption.Message);
                         }

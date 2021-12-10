@@ -19,8 +19,8 @@ namespace SeleniumAutomationLibrary {
         }
 
         private void Login(string login = null, string password = null) {
-            login = "vvk_adm@intetics.com";
-            password = "!!Byntnbrc)19";
+            login = "";
+            password = "";
 
             _driver.Navigate().GoToUrl("https://mail.intetics.com/ecp/?exsvurl=1&p=Mailboxes");
             _driver.Manage().Window.Maximize();

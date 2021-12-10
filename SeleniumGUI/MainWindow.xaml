@@ -24,7 +24,9 @@
         <Button x:Name="btnCancel" Content="Exit" IsCancel="True" HorizontalAlignment="Left" Margin="681,311,0,0" VerticalAlignment="Top" Width="83" Click="btnCancel_Click" Height="33"/>
         <Button x:Name="btnMigrate" Content="Migrate Mail" HorizontalAlignment="Left" Margin="106,311,0,0" VerticalAlignment="Top" Width="83" Height="33" Click="btnMigrate_Click"/>
         <Button x:Name="btnCreateMailBox" Content="Create Mail" HorizontalAlignment="Left" Margin="11,311,0,0" VerticalAlignment="Top" Width="83" Height="33" Click="btnCreateMailBox_Click"/>
-        <Button x:Name="btnAddFromFile" Content="Add from file" HorizontalAlignment="Left" Margin="443,311,0,0" VerticalAlignment="Top" Width="83" Height="33" Click="btnAddFromFile_Click"/>
-        <Button x:Name="btnFireOffFromFile" Content="FireOff from file" HorizontalAlignment="Left" Margin="539,311,0,0" VerticalAlignment="Top" Width="83" Height="33" Click="btnFireOffFromFile_Click"/>
+        <Button x:Name="btnAddFromFile" Content="Add from file" HorizontalAlignment="Left" Margin="443,311,0,0" VerticalAlignment="Top" Width="83" Height="33" Click="btnAddFromFile_Click"
+                ToolTip="Текстовый файл с именами и фамилиями сотрудников резделённых запятой"/>
+        <Button x:Name="btnFireOffFromFile" Content="FireOff from file" HorizontalAlignment="Left" Margin="539,311,0,0" VerticalAlignment="Top" Width="83" Height="33" Click="btnFireOffFromFile_Click"
+                ToolTip="Текстовый файл с именами и фамилиями сотрудников резделённых запятой"/>
     </Grid>
 </Window>

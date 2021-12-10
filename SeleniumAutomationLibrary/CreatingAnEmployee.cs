@@ -8,6 +8,7 @@ namespace SeleniumAutomationLibrary {
     public class CreatingAnEmployee {
         // declaring an event using built-in EventHandler
         public event EventHandler ProcessCompleted;
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         protected virtual void OnProcessCompleted(EventArgs e) {
             ProcessCompleted?.Invoke(this, e);
@@ -27,12 +28,16 @@ namespace SeleniumAutomationLibrary {
             using (IWebDriver driver = new ChromeDriver(driverService, new ChromeOptions())) {
                 try {
                     try {
+                        log.Debug("Trying to login with Microsoft user account in jira");
                         new Microsoft(driver).Login();
+                        log.Info($"Successfully loged in with Microsoft user account.");
                     }
                     catch (Exception msExeption) {
+                        log.Error($"Can`t login with Microsoft users account. {msExeption}");  
                         throw new Exception(msExeption.Message);
                     }
 
+                    //work with jira
                     try {
                         new Jira(driver).Recruit(coworker);                        
                     }
@@ -43,8 +48,10 @@ namespace SeleniumAutomationLibrary {
                         }
                     }
 
+                    //work with Confluence
                     try {
                         driver.SwitchTo().NewWindow(WindowType.Tab);
+                        log.Debug($"Try to Create user account in Confluence");
                         new Confluence(driver).Recruit(coworker);
                     }
                     catch (Exception confluenceExeption) {

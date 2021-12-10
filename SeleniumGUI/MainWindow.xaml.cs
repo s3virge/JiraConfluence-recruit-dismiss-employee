@@ -1,4 +1,5 @@
 ﻿using ActiveDirectoryLibrary;
+using log4net.Config;
 using Microsoft.Win32;
 using SeleniumAutomationLibrary;
 using System;
@@ -15,8 +16,16 @@ namespace SeleniumGUI {
     public partial class MainWindow : Window {
         private Employee _employee = new Employee();
         private string _ldapPathToCurrentDomain = Domains.LdapPathToCurrentDomain;
+        
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public MainWindow() {
+            //если отключить  XmlConfigurator.Configure(fileInfo); то лог создаваться на будет. 
+            //для всего проекта удобней отключать лог в AssemblyInfo.cs, а не в кождом классе.
+            //var baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            //FileInfo fileInfo = new FileInfo(baseDir + "log4net.config");
+            //XmlConfigurator.Configure(fileInfo);
+
             InitializeComponent();
             tbUserName.Focus();
             MouseLeftButtonDown += delegate { DragMove(); };

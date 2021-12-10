@@ -2,9 +2,13 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Diagnostics;
 
 namespace SeleniumAutomationLibrary {
     class Confluence {
+
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private WebDriverWait _wait;
         private IWebDriver _driver;        
 
@@ -14,8 +18,11 @@ namespace SeleniumAutomationLibrary {
         }
 
         public void Dismiss(Employee employee) {
-            LoginInToConfluence();
+            log.Debug("Try to fire off an employee");
+            //LoginInToConfluence();
             _driver.Navigate().GoToUrl($"https://confluence.intetics.com/confluence/admin/users/editusergroups-start.action?username={employee.Login}");
+
+            log.Debug("Wait when display 'admin-content' element");
             _wait.Until(webDriver => webDriver.FindElement(By.Id("admin-content")).Displayed);
 
             var chekbox = _driver.FindElement(By.Id("confluence-employees"));
@@ -32,24 +39,45 @@ namespace SeleniumAutomationLibrary {
         }
 
         private void LoginInToConfluence() {
-            const string password = "2XeytrEV)78";
+            /*конфлюенс требует Administrator Access - логинимся*/
+            log.Debug($"Try to login in confluence");
+
+            StackFrame callStack = new StackFrame(1, true);
+            //log.Info($"Log message here - {callStack.GetFileName()} {callStack.GetFileLineNumber()}");
+            
             const string user = "v.kobzar@intetics.com";
+            const string password = "2XeytrEV_78";
             _driver.Navigate().GoToUrl($"https://confluence.intetics.com/confluence/authenticate.action?destination=/admin/users/viewuser.action?username={user}");
+                        
+            log.Debug("Wait when will display 'login-container' element ");
             _wait.Until(webDriver => webDriver.FindElement(By.Id("login-container")).Displayed);
+            
+            log.Debug("Find element 'password' and send keys");
             _driver.FindElement(By.Id("password")).SendKeys(password);
+            
+            log.Debug("Find element 'authenticateButton' and click");
             _driver.FindElement(By.Id("authenticateButton")).Click();
+
+            log.Info("'authenticateButton' element was clicked");
         }
 
         public void Recruit(Employee emp) {
-            LoginInToConfluence();
-            ProcessUserCreatingConfluence(emp);
+            //LoginInToConfluence();
+            //log.Info("Login to confluence was successful");
+
+            CreateNewEmployee(emp);
+
             if (emp.Subcontractor == false) {
                 AddToGroup(emp);
             }
         }
 
-        private void ProcessUserCreatingConfluence(Employee emplo) {
+        private void CreateNewEmployee(Employee emplo) {
+            log.Debug("Try to create user account in confluence");
+
             _driver.Navigate().GoToUrl($"https://confluence.intetics.com/confluence/admin/users/createuser.action");
+
+            log.Debug("Wait when display 'create-pane' element");
             _wait.Until(webDriver => webDriver.FindElement(By.Id("create-pane")).Displayed);
             _driver.FindElement(By.Id("username")).SendKeys(emplo.Login);
             _driver.FindElement(By.Id("fullname")).SendKeys(emplo.FullName);
@@ -58,6 +86,8 @@ namespace SeleniumAutomationLibrary {
             _driver.FindElement(By.Id("password")).SendKeys(pass);
             _driver.FindElement(By.Id("confirm")).SendKeys(pass);
             _driver.FindElement(By.XPath("//*[@id='create-user-form']/form/fieldset/div[7]/div/input")).SendKeys(Keys.Enter);
+
+            log.Info("Employee was successfuly created ");
         }
 
         private void AddToGroup(Employee epl) {

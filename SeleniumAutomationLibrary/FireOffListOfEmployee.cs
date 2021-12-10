@@ -1,7 +1,5 @@
 ﻿
 using ActiveDirectoryLibrary;
-using log4net;
-using log4net.Config;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
@@ -17,12 +15,12 @@ namespace SeleniumAutomationLibrary
     {
         // Define a static logger variable so that it references the
         // Logger instance named "MyApp".
-        private static readonly ILog log = LogManager.GetLogger(typeof(FireOffListOfEmployee));
+        //private static readonly ILog log = LogManager.GetLogger(typeof(FireOffListOfEmployee));
 
         public FireOffListOfEmployee()
         {
             // Set up a simple configuration that logs on the console.
-            BasicConfigurator.Configure();
+            //BasicConfigurator.Configure();
         }
 
         // declaring an event using built-in EventHandler
@@ -98,7 +96,7 @@ namespace SeleniumAutomationLibrary
 
                         if (employee.IsEmpty())
                         {
-                            log.Error($"{em} does not exist in Active Directory");
+                            //log.Error($"{em} does not exist in Active Directory");
                             OnPrintToOutput($"{em} does not exist in Active Directory");
                             continue;
                         }
@@ -110,7 +108,7 @@ namespace SeleniumAutomationLibrary
                         }
                         catch (Exception jiraExeption)
                         {
-                            log.Error($"Something went wrong when fireoff {em} in jira");
+                            //log.Error($"Something went wrong when fireoff {em} in jira");
                             OnPrintToOutput($"Something went wrong when fireoff {em} in jira");
 
                             MessageBoxResult result = MessageBox.Show($"{jiraExeption.Message} \n\n Continue the execution of the script?", "Something went wrong!", MessageBoxButton.YesNo, MessageBoxImage.Error);
@@ -128,7 +126,7 @@ namespace SeleniumAutomationLibrary
                         }
                         catch (Exception confluenceExeption)
                         {
-                            log.Error($"Something went wrong when dismiss {em} in confluence");
+                            //log.Error($"Something went wrong when dismiss {em} in confluence");
                             OnPrintToOutput($"Something went wrong when dismiss {em} in confluence");
                             throw new Exception(confluenceExeption.Message);
                         }
