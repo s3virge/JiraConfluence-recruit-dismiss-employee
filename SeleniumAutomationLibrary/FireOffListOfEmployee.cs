@@ -19,7 +19,8 @@ namespace SeleniumAutomationLibrary
 
         public FireOffListOfEmployee()
         {
-            // Set up a simple configuration that logs on the console.
+            // Set up a simple configuration that logs on the console.            
+            //нашел на офсайте https://logging.apache.org/log4net/release/manual/configuration.html
             //BasicConfigurator.Configure();
         }
 

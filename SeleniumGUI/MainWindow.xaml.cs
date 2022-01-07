@@ -316,5 +316,12 @@ namespace SeleniumGUI {
                 MessageBox.Show(ception.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsWnd settings = new SettingsWnd();
+            settings.Owner = this;
+            settings.ShowDialog();
+        }
     }
 }

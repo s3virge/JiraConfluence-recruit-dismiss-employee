@@ -4,7 +4,8 @@ using OpenQA.Selenium.Support.UI;
 using System;
 using System.Diagnostics;
 
-namespace SeleniumAutomationLibrary {
+namespace SeleniumAutomationLibrary
+{
     class Confluence {
 
         private static readonly log4net.ILog log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -44,9 +45,10 @@ namespace SeleniumAutomationLibrary {
 
             StackFrame callStack = new StackFrame(1, true);
             //log.Info($"Log message here - {callStack.GetFileName()} {callStack.GetFileLineNumber()}");
+
+            string user, password;
+            Settings.ReadLoginPasswordFromRegestry(out user, out password);
             
-            const string user = "v.kobzar@intetics.com";
-            const string password = "2XeytrEV_78";
             _driver.Navigate().GoToUrl($"https://confluence.intetics.com/confluence/authenticate.action?destination=/admin/users/viewuser.action?username={user}");
                         
             log.Debug("Wait when will display 'login-container' element ");

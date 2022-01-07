@@ -17,6 +17,7 @@
             <Button x:Name="btnFind" Content="Find" IsDefault="True"  Click="btnFind_Click" HorizontalAlignment="Left" Margin="220,9,0,0" VerticalAlignment="Top" Width="110" Background="#FFDDDDDD" BorderBrush="#FFDDDDDD" Height="25"/>
             <ListBox x:Name="lstEmployees" SelectionChanged="lstEmployees_SelectionChanged" HorizontalAlignment="Left" Height="243" Margin="7,39,0,0" VerticalAlignment="Top" Width="206"/>
             <TextBox x:Name="tbEmployeeInfo" HorizontalAlignment="Left" Height="272" Margin="335,10,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="438"/>
+            <Button Content="Settings" HorizontalAlignment="Left" Margin="242,241,0,0" VerticalAlignment="Top" Height="27" Width="66" Click="Settings_Click"/>
         </Grid>
 
         <Button x:Name="btnRecruit" Content="Recruit" HorizontalAlignment="Left" Margin="228,311,0,0" VerticalAlignment="Top" Width="83" Click="btnRecruit_Click" Height="33" Background="#FF93F989"/>

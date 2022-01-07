@@ -1,13 +1,10 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
-namespace SeleniumAutomationLibrary {
+namespace SeleniumAutomationLibrary
+{
     class Microsoft {
         private WebDriverWait _wait;
         private IWebDriver _driver;
@@ -28,7 +25,8 @@ namespace SeleniumAutomationLibrary {
             _wait.Until(webDriver => webDriver.FindElement(By.Name("loginfmt")).Displayed);
 
             //Microsoft login form
-            login = "v.kobzar@intetics.com";            
+          
+            Settings.ReadLoginPasswordFromRegestry(out login, out password);
             IWebElement msFormLogin = _driver.FindElement(By.Name("loginfmt"));
             msFormLogin.SendKeys(login);
             _driver.FindElement(By.Id("idSIButton9")).Click();
@@ -36,7 +34,7 @@ namespace SeleniumAutomationLibrary {
             Thread.Sleep(1000);
 
             _wait.Until(webDriver => webDriver.FindElement(By.Name("passwd")).Displayed);
-            password = "2XeytrEV_78";
+          
             _driver.FindElement(By.Name("passwd")).SendKeys(password);
             _driver.FindElement(By.Id("idSIButton9")).Click();
 
@@ -44,7 +42,7 @@ namespace SeleniumAutomationLibrary {
             //_wait.Until(webDriver => webDriver.FindElement(By.Id("idSubmit_SAOTCC_Continue")).Displayed);
 
             log.Debug($"Try to login with microsoft account. Wait when display 'idDiv_SAOTCAS_Title' element");
-            //глюч происходит на этапе Debug
+            //глюk происходит на этапе Debug
             _wait.Until(webDriver => webDriver.FindElement(By.Id("idDiv_SAOTCAS_Title")).Displayed);
 
             log.Debug($"Try to login with microsoft account. Wait when display 'idBtn_Back' element");
