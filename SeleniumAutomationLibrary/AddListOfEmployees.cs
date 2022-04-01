@@ -38,7 +38,7 @@ namespace SeleniumAutomationLibrary
         {
             var employeesList = new List<string>();
 
-            listOfEmployees = listOfEmployees.Replace("\r\n", "");
+            listOfEmployees = listOfEmployees.Replace("\r\n", ",");
 
             string[] employees = listOfEmployees.Split(',');
 
@@ -46,7 +46,7 @@ namespace SeleniumAutomationLibrary
             {
                 if (string.IsNullOrEmpty(e) == false)
                 {
-                    employeesList.Add(e);
+                    employeesList.Add(e.Trim());
                 }
             }
             return employeesList;
