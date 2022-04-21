@@ -26,6 +26,7 @@ namespace SeleniumGUI {
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Domain is missing", MessageBoxButton.OK, MessageBoxImage.Error);
+                Current.Shutdown();
             }
         }
     }
