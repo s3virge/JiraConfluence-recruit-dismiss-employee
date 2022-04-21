@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using SeleniumAutomationLibrary;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -322,6 +323,15 @@ namespace SeleniumGUI {
             SettingsWnd settings = new SettingsWnd();
             settings.Owner = this;
             settings.ShowDialog();
+        }
+
+        private void btnDownloadChromeDriver_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "https://chromedriver.storage.googleapis.com/index.html",
+                UseShellExecute = true
+            });
         }
     }
 }

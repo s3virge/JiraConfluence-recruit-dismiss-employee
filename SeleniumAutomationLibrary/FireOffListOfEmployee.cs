@@ -47,7 +47,7 @@ namespace SeleniumAutomationLibrary
         {
             var employeesList = new List<string>();
 
-            listOfEmployees = listOfEmployees.Replace("\r\n", "");
+            listOfEmployees = listOfEmployees.Replace("\r\n", ",");
 
             string[] employees = listOfEmployees.Split(',');
 
