@@ -20,8 +20,8 @@ namespace SeleniumAutomationLibrary
 
             RegistryKey key = Registry.CurrentUser.CreateSubKey(regPath);
             //storing the values  
-            key.SetValue(regLogin, login);
-            key.SetValue(regPassword, password);
+            key.SetValue(regLogin, base64login);
+            key.SetValue(regPassword, base64password);
 
             key.Close();
         }

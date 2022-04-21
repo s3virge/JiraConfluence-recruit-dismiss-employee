@@ -29,7 +29,7 @@ namespace SeleniumGUI
             Settings.ReadLoginPasswordFromRegestry(out login, out password);
             tbLogin.Text = login;
             tbPassword.Password = password;
-            tbPassword.Focus();            
+            tbLogin.Focus();            
         }
      
         private void OK_Click(object sender, RoutedEventArgs e)

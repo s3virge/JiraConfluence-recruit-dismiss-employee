@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SeleniumGUI"
         mc:Ignorable="d"
-        Title="Settings" Height="202" Width="299" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+        Title="Settings" 
+        Height="179" Width="319" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
     <Grid>
-        <TextBox x:Name="tbLogin" Margin="37,25,26,0" Height="21" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
-            <TextBox.ToolTip>Login</TextBox.ToolTip>
+        <TextBox x:Name="tbLogin" Margin="20,15,20,0" Height="21" VerticalAlignment="Top">
+            <TextBox.ToolTip>Login for jira-confluence</TextBox.ToolTip>
         </TextBox>
-        <PasswordBox x:Name="tbPassword" Margin="37,62,26,0" Height="21" VerticalAlignment="Top" ToolTip="Password" />
-        <Button Content="OK" HorizontalAlignment="Left" Margin="150,131,0,0" VerticalAlignment="Top" Width="57" IsDefault="True" Height="30" Click="OK_Click"/>
-        <Button Content="Not OK" HorizontalAlignment="Left" Margin="222,131,0,0" VerticalAlignment="Top" Width="54" IsCancel="True" Height="30"/>
+        <PasswordBox x:Name="tbPassword" Margin="20,53,20,0" Height="21" VerticalAlignment="Top" ToolTip="Password" />
+        <Button Content="OK" HorizontalAlignment="Left" Margin="141,95,0,0" VerticalAlignment="Top" Width="57" IsDefault="True" Height="30" Click="OK_Click"/>
+        <Button Content="Not OK" HorizontalAlignment="Left" Margin="218,95,0,0" VerticalAlignment="Top" Width="54" IsCancel="True" Height="30"/>
     </Grid>
 </Window>
