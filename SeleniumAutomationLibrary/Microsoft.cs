@@ -36,7 +36,7 @@ namespace SeleniumAutomationLibrary
             _wait.Until(webDriver => webDriver.FindElement(By.Name("passwd")).Displayed);
           
             _driver.FindElement(By.Name("passwd")).SendKeys(password);
-            _driver.FindElement(By.Id("idSIButton9")).Click();
+            _driver.FindElement(By.Id("idSIButton9")).Click(); //sign in button
 
             //enter code
             //_wait.Until(webDriver => webDriver.FindElement(By.Id("idSubmit_SAOTCC_Continue")).Displayed);

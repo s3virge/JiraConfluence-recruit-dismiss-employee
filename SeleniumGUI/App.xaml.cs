@@ -11,7 +11,8 @@ namespace SeleniumGUI
         App() {
             try
             {
-                bool admin = new ActiveDirectory().IsDomainAdministrator();
+                var ad = new ActiveDirectory();
+                bool admin = ad.IsDomainAdministrator();
 
                 if (admin == false)
                 {
@@ -21,7 +22,7 @@ namespace SeleniumGUI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Domain is missing", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(ex.Message, "Ha! Something went wrong", MessageBoxButton.OK, MessageBoxImage.Error);
                 Current.Shutdown();
             }
         }

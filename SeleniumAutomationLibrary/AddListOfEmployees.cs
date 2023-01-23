@@ -86,6 +86,11 @@ namespace SeleniumAutomationLibrary
                         //check if employee exists in AD
                         Employee employee = new ActiveDirectory().GetEmployee(Domains.LdapPathToCurrentDomain, em);
 
+                        if (employee.IsEmpty() == true)
+                        {
+                            employee = new ActiveDirectory().GetEmployee(Domains.LdapPathToAnotherDomain, em);
+                        }
+
                         if (employee.IsEmpty())
                         {
                             log.Error($"{em} does not exist in Active Directory");
