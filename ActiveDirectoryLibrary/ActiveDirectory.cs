@@ -48,15 +48,11 @@ namespace ActiveDirectoryLibrary{
         public bool IsDomainAdministrator() {
             string currentDomain = Domain.GetComputerDomain().ToString();
             bool isAdmin = false;
-            if (currentDomain.Equals(Domains.UAName)) {
+            //if (currentDomain.Equals(Domains.UAName)) {
                 isAdmin = IsCurrentUserInGroup("g_admins");
-                if (isAdmin == false) {
-                    isAdmin = IsCurrentUserInGroup("g_admins_adm");
-                }
-            }
-            else if (currentDomain.Equals(Domains.UAName)) {
-                isAdmin = IsCurrentUserInGroup("Domain Admins");
-            }
+                if (isAdmin == false) { isAdmin = IsCurrentUserInGroup("g_admins_adm");  }
+                if (isAdmin == false) { isAdmin = IsCurrentUserInGroup("Domain Admins"); }
+            //}
             return isAdmin;
         }
 
