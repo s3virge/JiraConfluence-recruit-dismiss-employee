@@ -59,46 +59,7 @@ namespace ActiveDirectoryLibrary
 
             return emplList;
         }
-
-        //public bool IsDomainAdministrator() {
-        //    string currentDomain = Domain.GetComputerDomain().ToString();
-        //    bool isAdmin = false;
-        //    //if (currentDomain.Equals(Domains.UAName)) {
-        //        isAdmin = IsCurrentUserInGroup("g_admins");
-        //        if (isAdmin == false) { isAdmin = IsCurrentUserInGroup("g_admins_adm");  }
-        //        if (isAdmin == false) { isAdmin = IsCurrentUserInGroup("Domain Admins"); }
-        //    //}
-        //    return isAdmin;
-        //}
-
-        //public bool IsCurrentUserInGroup(string groupName) {
-        //    //UserPrincipal user = null;
-        //    using (WindowsIdentity currentUserIdentity = WindowsIdentity.GetCurrent()) {
-        //        using (PrincipalContext context = new PrincipalContext(ContextType.Domain)) {
-        //            //GroupPrincipal adminGroup = new GroupPrincipal(context, "g_admins_adm");
-        //            //GroupPrincipal grp = new GroupPrincipal(context, "g_admins");
-        //            //if (grp != null) {
-        //            //    user = UserPrincipal.FindByIdentity(context, identity.Name);
-        //            //}
-        //            //var result = user.IsMemberOf(grp);
-        //            string userName = currentUserIdentity.Name;
-        //            int index = userName.IndexOf('\\') + 1;
-        //            string userLogin = currentUserIdentity.Name.Substring(index);
-        //            using (GroupPrincipal grp = GroupPrincipal.FindByIdentity(context, IdentityType.Name, groupName)) {
-        //                if (grp != null) {
-        //                    foreach (Principal p in grp.GetMembers(true)) {
-        //                        Debug.WriteLine($"{p.SamAccountName} {userLogin}");
-        //                        if (p.SamAccountName.Equals(userLogin)) {
-        //                            return true;
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        return false;
-        //    }
-        //}
-
+        
         /// <summary>
         /// get from ad object properties
         /// </summary>
