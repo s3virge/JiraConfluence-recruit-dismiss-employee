@@ -14,7 +14,8 @@ namespace ActiveDirectoryLibrary {
         /// </summary>
         private static string Current { 
             get {
-                return Domain.GetComputerDomain().ToString();
+                //return Domain.GetComputerDomain().ToString();
+                return Domains.BYDomainName;
             } 
         } 
       

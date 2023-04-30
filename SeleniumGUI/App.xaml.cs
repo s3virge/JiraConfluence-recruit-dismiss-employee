@@ -9,22 +9,22 @@ namespace SeleniumGUI
     /// </summary>
     public partial class App : Application {
         App() {
-            try
-            {
-                var ad = new ActiveDirectory();
-                bool admin = ad.IsDomainAdministrator();
+            //try
+            //{
+            //    var ad = new ActiveDirectory();
+            //    bool admin = ad.IsDomainAdministrator();
 
-                if (admin == false)
-                {
-                    MessageBox.Show("Hey! You are not admin. Bye.", "GO ahead", MessageBoxButton.OK, MessageBoxImage.Error);
-                    Current.Shutdown();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ha! Something went wrong", MessageBoxButton.OK, MessageBoxImage.Error);
-                Current.Shutdown();
-            }
+            //    if (admin == false)
+            //    {
+            //        MessageBox.Show("Hey! You are not admin. Bye.", "GO ahead", MessageBoxButton.OK, MessageBoxImage.Error);
+            //        Current.Shutdown();
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message, "Ha! Something went wrong", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    Current.Shutdown();
+            //}
         }
     }
 }

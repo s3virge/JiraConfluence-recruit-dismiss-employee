@@ -1,24 +1,39 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.DirectoryServices;
-using System.DirectoryServices.AccountManagement;
-using System.DirectoryServices.ActiveDirectory;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ActiveDirectoryLibrary{
+namespace ActiveDirectoryLibrary
+{
     public class ActiveDirectory {
-        
+
+        private string _domainPath = "LDAP://" + Domains.BYName; // назва домену
+        private DirectoryEntry _directoryEntry;
+
+        public ActiveDirectory()
+        {
+            try
+            {
+                //_domain = DomainToGetInfoFrom.GetLDAPDomainPath();
+                string login; // ім'я користувача з правами доступу до домену
+                string password; // пароль користувача
+
+                Settings.ReadLoginPasswordFromRegestry(out login, out password);
+                
+                _directoryEntry = new DirectoryEntry(_domainPath, login.Replace("@intetics.com", ""), password);
+            }
+            catch (Exception)
+            {
+                throw new Exception("Виникла помилка в конструкторі ActiveDirectory()");
+            }
+        }
+
         public List<string> GetListOfEmployee(string ldapRoot, string whoToSeek = null) {
             var emplList = new List<string>();            
             string searchFilter = $"(&(objectCategory=user)(cn=*{whoToSeek}*))";
 
             //seek by name
-            DirectorySearcher dirSearcher = new DirectorySearcher(new DirectoryEntry(ldapRoot), searchFilter);
+            _directoryEntry.Path = ldapRoot;
+            DirectorySearcher dirSearcher = new DirectorySearcher(_directoryEntry, searchFilter);
 
             if (string.IsNullOrEmpty(whoToSeek) == true) {
                 dirSearcher.Filter = $"( &(objectCategory=User))";
@@ -45,44 +60,44 @@ namespace ActiveDirectoryLibrary{
             return emplList;
         }
 
-        public bool IsDomainAdministrator() {
-            string currentDomain = Domain.GetComputerDomain().ToString();
-            bool isAdmin = false;
-            //if (currentDomain.Equals(Domains.UAName)) {
-                isAdmin = IsCurrentUserInGroup("g_admins");
-                if (isAdmin == false) { isAdmin = IsCurrentUserInGroup("g_admins_adm");  }
-                if (isAdmin == false) { isAdmin = IsCurrentUserInGroup("Domain Admins"); }
-            //}
-            return isAdmin;
-        }
+        //public bool IsDomainAdministrator() {
+        //    string currentDomain = Domain.GetComputerDomain().ToString();
+        //    bool isAdmin = false;
+        //    //if (currentDomain.Equals(Domains.UAName)) {
+        //        isAdmin = IsCurrentUserInGroup("g_admins");
+        //        if (isAdmin == false) { isAdmin = IsCurrentUserInGroup("g_admins_adm");  }
+        //        if (isAdmin == false) { isAdmin = IsCurrentUserInGroup("Domain Admins"); }
+        //    //}
+        //    return isAdmin;
+        //}
 
-        public bool IsCurrentUserInGroup(string groupName) {
-            //UserPrincipal user = null;
-            using (WindowsIdentity currentUserIdentity = WindowsIdentity.GetCurrent()) {
-                using (PrincipalContext context = new PrincipalContext(ContextType.Domain)) {
-                    //GroupPrincipal adminGroup = new GroupPrincipal(context, "g_admins_adm");
-                    //GroupPrincipal grp = new GroupPrincipal(context, "g_admins");
-                    //if (grp != null) {
-                    //    user = UserPrincipal.FindByIdentity(context, identity.Name);
-                    //}
-                    //var result = user.IsMemberOf(grp);
-                    string userName = currentUserIdentity.Name;
-                    int index = userName.IndexOf('\\') + 1;
-                    string userLogin = currentUserIdentity.Name.Substring(index);
-                    using (GroupPrincipal grp = GroupPrincipal.FindByIdentity(context, IdentityType.Name, groupName)) {
-                        if (grp != null) {
-                            foreach (Principal p in grp.GetMembers(true)) {
-                                Debug.WriteLine($"{p.SamAccountName} {userLogin}");
-                                if (p.SamAccountName.Equals(userLogin)) {
-                                    return true;
-                                }
-                            }
-                        }
-                    }
-                }
-                return false;
-            }
-        }
+        //public bool IsCurrentUserInGroup(string groupName) {
+        //    //UserPrincipal user = null;
+        //    using (WindowsIdentity currentUserIdentity = WindowsIdentity.GetCurrent()) {
+        //        using (PrincipalContext context = new PrincipalContext(ContextType.Domain)) {
+        //            //GroupPrincipal adminGroup = new GroupPrincipal(context, "g_admins_adm");
+        //            //GroupPrincipal grp = new GroupPrincipal(context, "g_admins");
+        //            //if (grp != null) {
+        //            //    user = UserPrincipal.FindByIdentity(context, identity.Name);
+        //            //}
+        //            //var result = user.IsMemberOf(grp);
+        //            string userName = currentUserIdentity.Name;
+        //            int index = userName.IndexOf('\\') + 1;
+        //            string userLogin = currentUserIdentity.Name.Substring(index);
+        //            using (GroupPrincipal grp = GroupPrincipal.FindByIdentity(context, IdentityType.Name, groupName)) {
+        //                if (grp != null) {
+        //                    foreach (Principal p in grp.GetMembers(true)) {
+        //                        Debug.WriteLine($"{p.SamAccountName} {userLogin}");
+        //                        if (p.SamAccountName.Equals(userLogin)) {
+        //                            return true;
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        return false;
+        //    }
+        //}
 
         /// <summary>
         /// get from ad object properties
@@ -116,7 +131,8 @@ namespace ActiveDirectoryLibrary{
                 "manager"           //17
             };
 
-            DirectorySearcher mySearcher = new DirectorySearcher(new DirectoryEntry(ldapRoot), searchFilter, properties);
+            _directoryEntry.Path = ldapRoot;
+            DirectorySearcher mySearcher = new DirectorySearcher(_directoryEntry, searchFilter, properties);
 
             //mySearcher.PropertiesToLoad.Add("CanonicalName");
             //mySearcher.PropertiesToLoad.Add("*");
