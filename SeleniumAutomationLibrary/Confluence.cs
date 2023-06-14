@@ -98,6 +98,14 @@ namespace SeleniumAutomationLibrary
             if (checkBoxEmployees.Selected == false) {
                 checkBoxEmployees.Click();
             }
+
+            //immediately add to the project group
+            //checkBoxEmployees = _driver.FindElement(By.Id("odt-0279 (gde planview – spatial data processing) developers"));
+            //if (checkBoxEmployees.Selected == false)
+            //{
+            //    checkBoxEmployees.Click();
+            //}
+
             _driver.FindElement(By.Name("save")).Click();
         }
     }
