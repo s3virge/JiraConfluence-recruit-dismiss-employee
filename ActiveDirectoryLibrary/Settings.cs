@@ -13,7 +13,7 @@ namespace ActiveDirectoryLibrary
         private const string regLogin = "Settings1";
         private const string regPassword = "Settings2";
 
-        static public void SaveLoginPasswordToRegistry(string login, string password)
+        static public void WriteLoginPasswordToRegistry(string login, string password)
         {
             string base64login = Convert.ToBase64String(Encoding.UTF8.GetBytes(login));
             string base64password = Convert.ToBase64String(Encoding.UTF8.GetBytes(password));
