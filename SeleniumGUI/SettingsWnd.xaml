@@ -6,13 +6,21 @@
         xmlns:local="clr-namespace:SeleniumGUI"
         mc:Ignorable="d"
         Title="Settings" 
-        Height="179" Width="319" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+        Height="268" Width="319" WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
     <Grid>
-        <TextBox x:Name="tbLogin" Margin="20,15,20,0" Height="21" VerticalAlignment="Top">
+        <Button Content="OK" HorizontalAlignment="Left" Margin="159,193,0,0" VerticalAlignment="Top" Width="65" IsDefault="True" Height="30" Click="OK_Click"/>
+        <Button Content="Not OK" HorizontalAlignment="Left" Margin="234,193,0,0" VerticalAlignment="Top" Width="65" IsCancel="True" Height="30"/>
+
+        <GroupBox Header="Jira-Confluence user account" Margin="10,1,10,145"/>
+        <TextBox x:Name="tbLogin" Margin="20,24,20,0" Height="21" VerticalAlignment="Top">
             <TextBox.ToolTip>Login for jira-confluence</TextBox.ToolTip>
         </TextBox>
-        <PasswordBox x:Name="tbPassword" Margin="20,53,20,0" Height="21" VerticalAlignment="Top" ToolTip="Password" />
-        <Button Content="OK" HorizontalAlignment="Left" Margin="141,95,0,0" VerticalAlignment="Top" Width="57" IsDefault="True" Height="30" Click="OK_Click"/>
-        <Button Content="Not OK" HorizontalAlignment="Left" Margin="218,95,0,0" VerticalAlignment="Top" Width="54" IsCancel="True" Height="30"/>
+        <PasswordBox x:Name="tbPassword" Margin="20,54,20,0" Height="21" VerticalAlignment="Top" ToolTip="Password" />
+
+        <GroupBox Header="Active Directory user account" Margin="10,93,10,53"/>
+        <TextBox x:Name="tbADLogin" Margin="20,114,20,0" Height="21" VerticalAlignment="Top">
+            <TextBox.ToolTip>Login for Active Directory</TextBox.ToolTip>
+        </TextBox>
+        <PasswordBox x:Name="tbADPassword" Margin="20,141,20,0" Height="21" VerticalAlignment="Top" ToolTip="Password" />
     </Grid>
 </Window>

@@ -17,8 +17,8 @@ namespace ActiveDirectoryLibrary
                 string login; // ім'я користувача з правами доступу до домену
                 string password; // пароль користувача
 
-                Settings.ReadLoginPasswordFromRegestry(out login, out password);
-                
+                Settings.ReadLoginPasswordFromRegestry(out login, out password);                
+
                 _directoryEntry = new DirectoryEntry(_domainPath, login.Replace("@intetics.com", ""), password);
             }
             catch (Exception)

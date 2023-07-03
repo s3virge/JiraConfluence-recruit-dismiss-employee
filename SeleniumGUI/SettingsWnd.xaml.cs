@@ -29,12 +29,17 @@ namespace SeleniumGUI
             Settings.ReadLoginPasswordFromRegestry(out login, out password);
             tbLogin.Text = login;
             tbPassword.Password = password;
-            tbLogin.Focus();            
+            tbLogin.Focus();
+
+            Settings.ReadLoginPasswordFromRegestry(out login, out password, true);
+            tbADLogin.Text = login;
+            tbADPassword.Password = password;
         }
      
         private void OK_Click(object sender, RoutedEventArgs e)
         {
             Settings.SaveLoginPasswordToRegistry(tbLogin.Text, tbPassword.Password);
+            Settings.SaveLoginPasswordToRegistry(tbADLogin.Text, tbADPassword.Password, true);
             Close();
         }       
     }

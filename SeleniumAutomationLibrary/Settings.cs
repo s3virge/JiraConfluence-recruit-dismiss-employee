@@ -9,14 +9,23 @@ namespace SeleniumAutomationLibrary
 {
     public class Settings
     {
-        private const string regPath = @"SOFTWARE\OurSettings";
+        private const string regJiraConfPath = @"SOFTWARE\OurSettings";
         private const string regLogin = "Settings1";
         private const string regPassword = "Settings2";
 
-        static public void SaveLoginPasswordToRegistry(string login, string password)
+        private const string regADPath = @"SOFTWARE\TroubleShooting";
+        
+
+        static public void SaveLoginPasswordToRegistry(string login, string password, bool isActiveDirectory = false)
         {
             string base64login = Convert.ToBase64String(Encoding.UTF8.GetBytes(login));
             string base64password = Convert.ToBase64String(Encoding.UTF8.GetBytes(password));
+
+            string regPath = regJiraConfPath;
+            if (isActiveDirectory == true)
+            {
+                regPath = regADPath;
+            }
 
             RegistryKey key = Registry.CurrentUser.CreateSubKey(regPath);
             //storing the values  
@@ -26,10 +35,15 @@ namespace SeleniumAutomationLibrary
             key.Close();
         }
 
-        static public void ReadLoginPasswordFromRegestry( out string login, out string password)
+        static public void ReadLoginPasswordFromRegestry(out string login, out string password, bool isActiveDirectory = false)
         {
             login = password = null;
 
+            string regPath = regJiraConfPath;
+            if (isActiveDirectory == true)
+            {
+                regPath = regADPath;
+            }
             //opening the subkey  
             RegistryKey key = Registry.CurrentUser.OpenSubKey(regPath);
 
