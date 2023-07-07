@@ -95,7 +95,7 @@ namespace SeleniumAutomationLibrary
         private void AddToGroup(Employee epl) {
             _driver.Navigate().GoToUrl($"https://confluence.intetics.com/confluence/admin/users/editusergroups-start.action?username={epl.Login}");
 
-            IWebElement checkBoxEmployees = _driver.FindElement(By.Id("confluence-user"));
+            IWebElement checkBoxEmployees = _driver.FindElement(By.Id("confluence-users"));
             if (checkBoxEmployees.Selected == false)
             {
                 checkBoxEmployees.Click();
@@ -107,11 +107,11 @@ namespace SeleniumAutomationLibrary
             }
 
             //immediately add to the project group
-            checkBoxEmployees = _driver.FindElement(By.Id("odt-0279 (gde planview – spatial data processing) developers"));
-            if (checkBoxEmployees.Selected == false)
-            {
-                checkBoxEmployees.Click();
-            }
+            //checkBoxEmployees = _driver.FindElement(By.Id("odt-0279 (gde planview – spatial data processing) developers"));
+            //if (checkBoxEmployees.Selected == false)
+            //{
+            //    checkBoxEmployees.Click();
+            //}
 
             _driver.FindElement(By.Name("save")).Click();
         }
