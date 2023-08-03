@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
+using System.Linq;
 
 namespace ActiveDirectoryLibrary
 {
@@ -134,6 +135,8 @@ namespace ActiveDirectoryLibrary
                 else if(employee.CanonicalName.Contains(Domains.BYName)) {
                         employee.Country = Country.BY;
                 }
+
+                employee.Subcontractor = employee.CanonicalName.Contains("Subcontractors");
 
                 //string propVal = SelectPropertie(resEnt, "msDS-User-Account-Control-Computed");
                 //if (string.IsNullOrEmpty(propVal) != true) {
