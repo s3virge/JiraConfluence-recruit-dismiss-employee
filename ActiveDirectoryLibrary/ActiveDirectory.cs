@@ -22,9 +22,9 @@ namespace ActiveDirectoryLibrary
 
                 _directoryEntry = new DirectoryEntry(_domainPath, login.Replace("@intetics.com", ""), password);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception("Виникла помилка в конструкторі ActiveDirectory()");
+                throw new Exception(ex.Message);
             }
         }
 
