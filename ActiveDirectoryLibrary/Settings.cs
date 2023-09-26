@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace ActiveDirectoryLibrary
             key.Close();
         }
 
-        static public void ReadLoginPasswordFromRegestry( out string login, out string password)
+        static public void ReadLoginPasswordFromRegestry(out string login, out string password)
         {
             login = password = null;
 
@@ -43,6 +44,10 @@ namespace ActiveDirectoryLibrary
                 password = System.Text.Encoding.Default.GetString(bytePassword);
 
                 key.Close();
+            }
+            else
+            {
+                throw new Exception("User password is empty.");
             }
         }
     }

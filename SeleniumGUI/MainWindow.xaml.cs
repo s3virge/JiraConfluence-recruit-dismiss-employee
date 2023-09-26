@@ -328,8 +328,8 @@ namespace SeleniumGUI {
         private void btnDownloadChromeDriver_Click(object sender, RoutedEventArgs e)
         {
             Process.Start(new ProcessStartInfo
-            {
-                FileName = "https://chromedriver.storage.googleapis.com/index.html",
+            {                
+                FileName = "https://googlechromelabs.github.io/chrome-for-testing/#stable",
                 UseShellExecute = true
             });
         }
