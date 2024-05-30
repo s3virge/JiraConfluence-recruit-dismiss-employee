@@ -16,7 +16,7 @@ namespace SeleniumAutomationLibrary
         // Define a static logger variable so that it references the
         // Logger instance named "MyApp".
         //private static readonly ILog log = LogManager.GetLogger(typeof(FireOffListOfEmployee));
-
+       
         public FireOffListOfEmployee()
         {
             // Set up a simple configuration that logs on the console.            
@@ -92,13 +92,8 @@ namespace SeleniumAutomationLibrary
 
                     foreach (var em in employeesList)
                     {
-                        //check if employee exists in AD
-                        Employee employee = new ActiveDirectory().GetEmployee(Domains.LdapPathToCurrentDomain, em);
-                        if (employee.IsEmpty() == true)
-                        {
-                            employee = new ActiveDirectory().GetEmployee(Domains.LdapPathToAnotherDomain, em);
-                        }                        
-
+                        Employee employee = new ActiveDirectory().GetEmployee(Domains.LdapPathToCurrentDomain, em.Trim());
+                     
                         if (employee.IsEmpty())
                         {
                             //log.Error($"{em} does not exist in Active Directory");
