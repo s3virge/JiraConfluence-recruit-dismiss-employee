@@ -98,13 +98,16 @@ namespace SeleniumAutomationLibrary
                             continue;
                         }
 
+                        ////////////////////////////////////////////////////////////////////////////
+                        ///create Jira Account /////////////////////////////////////////////////////
+                        ////////////////////////////////////////////////////////////////////////////
                         try
                         {
                             bool result = new Jira(driver).Recruit(employee);
                             if (result)
                             {
                                 OnPrintToOutput($"{employee.FullName} ({employee.Login}) was created in jira");
-                            }
+                            }                            
                         }
                         catch (Exception jiraExeption)
                         {
@@ -118,10 +121,13 @@ namespace SeleniumAutomationLibrary
                             }
                         }
 
+                        ///////////////////////////////////////////////////////////////////////////////
+                        /// create confluence account /////////////////////////////////////////////////
+                        /// ///////////////////////////////////////////////////////////////////////////
                         try
                         {
                             driver.SwitchTo().NewWindow(WindowType.Tab);
-                            new Confluence(driver).Recruit(employee);
+                            // new Confluence(driver).Recruit(employee);
                             OnPrintToOutput($"{employee.FullName} ({employee.Login}) was created in confluence");
                         }
                         catch (Exception confluenceExeption)
@@ -131,6 +137,9 @@ namespace SeleniumAutomationLibrary
                             throw new Exception(confluenceExeption.Message);
                         }
                     }
+
+                    driver.SwitchTo().NewWindow(WindowType.Tab);
+                    driver.Navigate().GoToUrl("https://jira.intetics.com/rest/api/2/user/duplicated/list");
 
                     OnProcessCompleted(EventArgs.Empty);
                 }

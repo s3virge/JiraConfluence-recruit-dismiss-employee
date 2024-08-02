@@ -39,7 +39,10 @@ namespace SeleniumAutomationLibrary {
 
                     //work with jira
                     try {
-                        new Jira(driver).Recruit(coworker);                        
+                        new Jira(driver).Recruit(coworker);
+
+                        driver.SwitchTo().NewWindow(WindowType.Tab);
+                        driver.Navigate().GoToUrl("https://jira.intetics.com/rest/api/2/user/duplicated/list");
                     }
                     catch (Exception jiraExeption) {
                         MessageBoxResult result = MessageBox.Show($"{jiraExeption.Message} \n\n Continue the execution of the script?", "Something went wrong!", MessageBoxButton.YesNo, MessageBoxImage.Error);

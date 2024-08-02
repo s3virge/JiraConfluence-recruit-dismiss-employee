@@ -60,10 +60,10 @@ namespace SeleniumAutomationLibrary {
             _driver.FindElement(By.Id("user-create-email")).SendKeys(employee.Mail);
             _driver.FindElement(By.Id("user-create-fullname")).SendKeys(employee.FullName);
             _driver.FindElement(By.Id("user-create-username")).SendKeys(employee.Login);
-            if (employee.Country.Equals(Country.UA) == true) {
-                //in dropdown list need to select Kharkiv
-                _driver.FindElement(By.Id("user-create-directoryId")).SendKeys("Kharkiv");
-            }
+            //if (employee.Country.Equals(Country.UA) == true) {
+            //    //in dropdown list need to select Kharkiv
+            //    _driver.FindElement(By.Id("user-create-directoryId")).SendKeys("Kharkiv");
+            //}
             _driver.FindElement(By.Id("user-create-submit")).Click();
 
             Thread.Sleep(2000);
