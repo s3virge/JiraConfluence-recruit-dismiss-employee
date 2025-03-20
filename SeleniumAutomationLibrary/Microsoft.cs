@@ -17,7 +17,7 @@ namespace SeleniumAutomationLibrary
 
         public void Login(string login = null, string password = null) {
                                    
-            _driver.Navigate().GoToUrl("https://login.microsoftonline.com");
+            _driver.Navigate().GoToUrl("https://login.microsoftonline.com/");
             _driver.Manage().Window.Maximize();
 
             Thread.Sleep(1000);

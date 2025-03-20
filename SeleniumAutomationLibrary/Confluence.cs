@@ -84,7 +84,7 @@ namespace SeleniumAutomationLibrary
             _driver.FindElement(By.Id("username")).SendKeys(emplo.Login);
             _driver.FindElement(By.Id("fullname")).SendKeys(emplo.FullName);
             _driver.FindElement(By.Id("email")).SendKeys(emplo.Mail);
-            const string pass = "1";
+            const string pass = "@RK5jsAVa";
             _driver.FindElement(By.Id("password")).SendKeys(pass);
             _driver.FindElement(By.Id("confirm")).SendKeys(pass);
             _driver.FindElement(By.XPath("//*[@id='create-user-form']/form/fieldset/div[7]/div/input")).SendKeys(Keys.Enter);

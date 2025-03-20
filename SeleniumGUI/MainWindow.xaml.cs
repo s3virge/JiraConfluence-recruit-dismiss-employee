@@ -97,11 +97,15 @@ namespace SeleniumGUI {
         }
 
         private void EmployeeCreating_ProcessCompleted(object sender, EventArgs e) {
-            MessageBox.Show($"The employee {_employee.FullName} ({_employee.Login}) was successfully created in jira & confluence.");
+            string completedMsg = $"Учётная запись {_employee.FullName} ({_employee.Login}) создана в jira & confluence.";
+            MessageBox.Show(completedMsg);
+            tbEmployeeInfo.Text = completedMsg;
         }
         
         private void EmployeeDismissing_ProcessCompleted(object sender, EventArgs e) {
-            MessageBox.Show($"The employee {_employee.FullName} ({_employee.Login}) was successfully dismissed in jira & confluence.");
+            string dismissingMsg = $"Учётная запись {_employee.FullName} ({_employee.Login}) была успешно удалена в jira & confluence.";
+            MessageBox.Show(dismissingMsg);
+            tbEmployeeInfo.Text = dismissingMsg;
         } 
         
         private void Migration_ProcessCompleted(object sender, EventArgs e) {
